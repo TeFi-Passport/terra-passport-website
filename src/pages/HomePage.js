@@ -1,6 +1,7 @@
 import React from "react";
 import {Header} from "../components/header";
 import {useWallet} from "@terra-money/use-wallet";
+import {MintButton} from "../components/buttons/MintButton";
 
 export const HomePage = () => {
 
@@ -17,22 +18,10 @@ export const HomePage = () => {
         disconnect,
     } = useWallet();
 
-    console.log(JSON.stringify(
-        {
-            status,
-            network,
-            wallets,
-            supportFeatures: Array.from(supportFeatures),
-            availableConnectTypes,
-            availableInstallTypes,
-        },
-        null,
-        2,
-    ))
-
     return (
         <div className="App">
             <Header/>
+            <MintButton/>
         </div>
     );
 
