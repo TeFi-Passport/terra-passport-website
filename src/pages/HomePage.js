@@ -1,27 +1,19 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Header} from "../components/header";
-import {useWallet} from "@terra-money/use-wallet";
 import {MintButton} from "../components/buttons/MintButton";
+import {generateScore} from "../utils/scoreGeneration";
 
 export const HomePage = () => {
 
-    const {
-        status,
-        network,
-        wallets,
-        availableConnectTypes,
-        availableInstallTypes,
-        availableConnections,
-        supportFeatures,
-        connect,
-        install,
-        disconnect,
-    } = useWallet();
+    useEffect(()=>generateScore(), [])
 
     return (
         <div className="App">
             <Header/>
             <MintButton/>
+            <div onClick={generateScore}>
+                Generate score
+            </div>
         </div>
     );
 
