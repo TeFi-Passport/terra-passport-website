@@ -1,6 +1,12 @@
 import {fetchTransactionAnalysis} from "./toRemove";
 import {isLessThanXDays} from "./utils";
 
+// todo: handle when count > 1
+
+/**
+ *
+ * @returns {Promise<number>} - the score associated with the address
+ */
 export const generateScore = async () => {
 
     console.log('generating score');
@@ -11,11 +17,13 @@ export const generateScore = async () => {
         mode: 'cors'
     };
 
-    const res = await fetch("https://947o3z5ei5.execute-api.us-east-2.amazonaws.com/default/model_inputs?address=terra1dy8wsxphneauw2wtldecem66xwa69y6zpd6gjh", requestOptions)
+    const res = await fetch("https://947o3z5ei5.execute-api.us-east-2.amazonaws.com/default/model_inputs?address=terra1m3tpuzxwjwulzza5vghuqlqx5x27tgmran4ate", requestOptions)
 
     console.log(res);
     console.log(await res.json());*/
-    const txs = await fetchTransactionAnalysis();
+    const res = await fetchTransactionAnalysis();
+    const txs = res.transactions;
+    console.log(getWenMoonScore(txs));
     return getGettingStartedScore(txs)
         + getInsomniacScore(txs)
         + getUpAndAtThemScore(txs)
@@ -23,10 +31,10 @@ export const generateScore = async () => {
         + getTerraActivistScore(txs)
         + getRockTheVoteScore(txs)
         + getBabyDegenScore(txs)
-        + getMultiTokenateScore(txs)
+        + getMultiTokenateScore(res.bank)
         + getAdultSwimScore(txs)
         + getBagBuilderScore(txs)
-        + getInDeepScore(txs)
+        + getInDeepScore(res.bank)
         + getDumpProofScore(txs)
         + getWenMoonScore(txs)
         + getAirdropAddictScore(txs)
@@ -80,10 +88,12 @@ const getUpAndAtThemScore = (txs) => {
     ];
     let contractsInteraction = 0;
     contracts.forEach((c) => {
-        const tx = txs.find(i => i.summary[c].count !== 0);
-        if (tx && isLessThanXDays(90, tx.timestamp)) {
-            contractsInteraction++;
-        }
+        const filteredTxs = txs.filter(i => i.summary[c].count !== 0);
+        filteredTxs.forEach((tx) => {
+            if (tx && isLessThanXDays(90, tx.timestamp)) {
+                contractsInteraction++;
+            }
+        });
     });
     return contractsInteraction >= 10 ? 3 : 0;
 }
@@ -115,17 +125,15 @@ const getGovDegenScore = (txs) => {
  */
 const getTerraActivistScore = (txs) => {
     let tokens = [
-        'anc_gov_stakings',
-        'mir_gov_stakings',
-        'pylon_gov_stakings',
-        'anc_airdrop_claims',
-        'mir_airdrop_claims',
-        'mine_airdrop_claims',
+        {gov: 'anc_gov_stakings', airdrop: 'anc_airdrop_claims'},
+        {gov: 'mir_gov_stakings', airdrop: 'mir_airdrop_claims'},
+        {gov: 'pylon_gov_stakings', airdrop: 'mine_airdrop_claims'}
     ];
+
     let contractsInteraction = 0;
     tokens.forEach((c) => {
-        const tx = txs.find(i => i.summary[c].count !== 0);
-        const tx2 = txs.find(i => i.summary[c].count !== 0);
+        const tx = txs.find(i => i.summary[c.gov].count !== 0);
+        const tx2 = txs.find(i => i.summary[c.airdrop].count !== 0);
         if (tx && tx2 && isLessThanXDays(90, tx.timestamp) && isLessThanXDays(90, tx2.timestamp)) {
             contractsInteraction++;
         }
@@ -147,17 +155,33 @@ const getRockTheVoteScore = (txs) => {
  * @returns {number} 1 if the address swapped on a dex at least time in the last 90 days - 0 otherwise.
  */
 const getBabyDegenScore = (txs) => {
-    // todo: implement
-    return 0;
+    let data = [
+        "buy_luna_ust_swap",
+        "sell_luna_ust_swap",
+        "buy_anc_ust_swap",
+        "sell_anc_ust_swap",
+        "buy_mir_ust_swap",
+        "sell_mir_ust_swap",
+        "buy_mine_ust_swap",
+        "sell_mine_ust_swap",
+    ];
+    let dexInteractions = 0;
+    data.forEach((c) => {
+        const tx = txs.find(i => i.summary[c].count !== 0);
+        if (tx && isLessThanXDays(90, tx.timestamp)) {
+            dexInteractions++;
+        }
+    });
+    return dexInteractions >= 1 ? 1 : 0;
 }
 
 /**
- * @param txs
- * @returns {number} 2 if the address transacted at least 5 tokens in the last 90 days - 0 otherwise.
+ * @param bank
+ * @returns {number} 2 if the address has at least 5 different tokens in wallet - 0 otherwise.
+ * // todo: change
  */
-const getMultiTokenateScore = (txs) => {
-    // todo: implement
-    return 0;
+const getMultiTokenateScore = (bank) => {
+    return bank.balance.length >= 5 ? 2 : 0;
 }
 
 /**
@@ -165,27 +189,84 @@ const getMultiTokenateScore = (txs) => {
  * @returns {number} 3 if the address did at least 2 deposits to a liquidity pool in the last 90 days - 0 otherwise.
  */
 const getAdultSwimScore = (txs) => {
-    // todo: implement
-    return 0;
+    let pools = [
+        "provide_liquidity_luna_ust",
+        "provide_liquidity_anc_ust",
+        "provide_liquidity_mir_ust",
+        "provide_liquidity_mine_ust"
+    ];
+    let poolDeposits = 0;
+    pools.forEach((c) => {
+        const filteredTxs = txs.filter(i => i.summary[c].count !== 0);
+        filteredTxs.forEach((tx) => {
+            if (tx && isLessThanXDays(90, tx.timestamp)) {
+                poolDeposits += tx.summary[c].count;
+            }
+        });
+    });
+    return poolDeposits >= 2 ? 3 : 0;
 }
 
 /**
  * @param txs
- * @returns {number} 1 if the address received more from bridges or CEX's than sent () or 0 sent in the last 90 days
+ * @returns {number} 1 if the address received more from bridges or CEX's than sent or 0 sent in the last 90 days
  * - 0 otherwise.
  */
 const getBagBuilderScore = (txs) => {
-    // todo: implement
-    return 0;
+    let lunaInflows = 0, lunaOutflows = 0, ustInflows = 0, ustOutflows = 0;
+    const lunaDeposits = [
+        "binance_deposit_uluna",
+        "kucoin_deposit_uluna",
+        "huobi_deposit_uluna",
+        "bithumb_deposit_uluna",
+    ];
+    const lunaWithdraws = [
+        "binance_withdraw_uluna",
+        "kucoin_withdraw_uluna",
+        "bithumb_withdraw_uluna",
+        "huobi_withdraw_uluna",
+    ];
+    const ustDeposit = [
+        "kucoin_deposit_uusd",
+    ];
+    const ustWithdraws = [
+        "kucoin_withdraw_uusd",
+    ];
+
+    const analyzeGroup = (contractType, variableToUpdate) => {
+        contractType.forEach((c) => {
+            // todo: filter
+            const tx = txs.find(i => i.summary[c].count !== 0);
+            if (tx && isLessThanXDays(90, tx.timestamp)) {
+                variableToUpdate += tx.amount;
+            }
+        });
+    }
+
+    analyzeGroup(lunaDeposits, lunaOutflows);
+    analyzeGroup(lunaWithdraws, lunaInflows);
+    analyzeGroup(ustDeposit, ustOutflows);
+    analyzeGroup(ustWithdraws, ustInflows);
+
+    // todo: analyze ust too
+    return lunaInflows - lunaOutflows >= 0 ? 1 : 0;
 }
 
 /**
- * @param txs
+ * @param bank
  * @returns {number} 2 if 75% of the luna of the address is staked - 0 otherwise.
  */
-const getInDeepScore = (txs) => {
-    // todo: implement
-    return 0;
+const getInDeepScore = (bank) => {
+    const walletInfo = bank.balance.find(i => i.denom === 'uluna');
+    const delegationInfo = bank.delegations;
+    if (!walletInfo && !delegationInfo.length)
+        return 0;
+    const availableLuna = parseInt(walletInfo.available);
+    let delegatedAmount = 0;
+    delegationInfo.forEach((d) => {
+        delegatedAmount += parseInt(d.amount);
+    })
+    return delegatedAmount >= 3 * availableLuna ? 2 : 0;
 }
 
 /**
@@ -199,12 +280,24 @@ const getDumpProofScore = (txs) => {
 
 /**
  * @param txs
- * @returns {number} 1 if the address claimed at least 2 airdrops from any protocol
- * - 0 otherwise.
+ * @returns {number} 1 if the address claimed at least 2 airdrops from any protocol - 0 otherwise.
  */
 const getWenMoonScore = (txs) => {
-    // todo: implement
-    return 0;
+    let airdrops = [
+        "anc_airdrop_claims",
+        "mir_airdrop_claims",
+        "mine_airdrop_claims",
+    ];
+    let airdropClaimed = 0;
+    airdrops.forEach((c) => {
+        const filteredTxs = txs.filter(i => i.summary[c].count !== 0);
+        filteredTxs.forEach((tx) => {
+            if (tx) {
+                airdropClaimed += tx.summary[c].count;
+            }
+        });
+    });
+    return airdropClaimed >= 2 ? 1 : 0;
 }
 
 /**
@@ -212,8 +305,19 @@ const getWenMoonScore = (txs) => {
  * @returns {number} 2 if the address claimed airdrops for at least 2 tokens - 0 otherwise.
  */
 const getAirdropAddictScore = (txs) => {
-    // todo: implement
-    return 0;
+    let airdrops = [
+        "anc_airdrop_claims",
+        "mir_airdrop_claims",
+        "mine_airdrop_claims",
+    ];
+    let airdropClaimed = 0;
+    airdrops.forEach((c) => {
+        const tx = txs.filter(i => i.summary[c].count !== 0);
+        if (tx) {
+            airdropClaimed++;
+        }
+    });
+    return airdropClaimed >= 2 ? 2 : 0;
 }
 
 /**
@@ -221,6 +325,26 @@ const getAirdropAddictScore = (txs) => {
  * @returns {number} 3 if the address claimed an airdrop from the same protocol more than once - 0 otherwise.
  */
 const getRepeatCustomerScore = (txs) => {
-    // todo: implement
-    return 0;
+    let airdrops = [
+        "anc_airdrop_claims",
+        "mir_airdrop_claims",
+        "mine_airdrop_claims",
+    ];
+    let ok = false;
+    airdrops.forEach((c) => {
+
+        const filteredTxs = txs.filter(i => i.summary[c].count !== 0);
+        let numberClaimed = 0;
+
+        filteredTxs.forEach((tx) => {
+            if (tx) {
+                numberClaimed += tx.summary[c].count
+            }
+        });
+
+        if (numberClaimed >= 2) {
+            ok = true;
+        }
+    });
+    return ok ? 3 : 0;
 }
