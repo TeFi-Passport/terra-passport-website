@@ -1,3 +1,34 @@
+@font-face {
+  font-family: "RoadRadio";
+  src: local("RoadRadio"),
+  url("./res/fonts/RoadRadio.ttf") format("truetype");
+  font-weight: 500;
+}
+@font-face {
+  font-family: "RoadRadio";
+  src: local("RoadRadio"),
+  url("./res/fonts/RoadRadio-Black.ttf") format("truetype");
+  font-weight: 900;
+}
+@font-face {
+  font-family: "RoadRadio";
+  src: local("RoadRadio"),
+  url("./res/fonts/RoadRadio-Bold.ttf") format("truetype");
+  font-weight: 700;
+}
+@font-face {
+  font-family: "RoadRadio";
+  src: local("RoadRadio"),
+  url("./res/fonts/RoadRadio-Light.ttf") format("truetype");
+  font-weight: 300;
+}
+@font-face {
+  font-family: "RoadRadio";
+  src: local("RoadRadio"),
+  url("./res/fonts/RoadRadio-Thin.ttf") format("truetype");
+  font-weight: 100;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -5,6 +36,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: url("./res/images/background.png");
+  background-size: cover;
 }
 
 code {
