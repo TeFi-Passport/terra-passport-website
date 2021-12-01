@@ -1,20 +1,20 @@
 import {ConnectType, useWallet} from "@terra-money/use-wallet";
 import React from "react";
 
-import {CustomButton} from "./CustomButton";
+import {GhostSmallButton} from "./CustomButtons";
+import {TextButton2} from "../texts";
 
 export const ConnectButton = () => {
 
     const {connect} = useWallet();
 
     return (
-        <CustomButton
+        <GhostSmallButton
             onClick={() => {
                 connect(ConnectType.EXTENSION)
             }}
-            text={'Connect wallet'}
         >
-
-        </CustomButton>
+            <TextButton2>Connect wallet</TextButton2>
+        </GhostSmallButton>
     );
 }

@@ -1,8 +1,6 @@
 import {fetchTransactionAnalysis} from "./toRemove";
 import {isLessThanXDays} from "./utils";
 
-// todo: handle when count > 1
-
 /**
  *
  * @returns {Promise<number>} - the score associated with the address

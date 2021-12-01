@@ -32,3 +32,6 @@ export const grey5 = '#F7F5F9';
 export const darkBackground = '#111618B2';
 export const darkOrange50 = '#271D124D';
 export const lightOrange30 = '#FFF3E54D';
+
+// gradients
+export const gradient2 = 'linear-gradient(85.4deg, #F9D09F -12.69%, #F6B569 108.16%) 1';

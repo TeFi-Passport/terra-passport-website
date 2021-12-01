@@ -8,6 +8,9 @@ import {
 } from "@terra-money/use-wallet";
 import React, {useCallback, useState} from "react";
 import {Fee, MsgSend} from "@terra-money/terra.js";
+import {GhostLargeButton} from "./CustomButtons";
+import {TextButton1} from "../texts";
+import Box from "@mui/material/Box";
 
 const TEST_TO_ADDRESS = 'terra1m4ft8j6npuvvg4nru3lkhc59je7eapxrg5cna7';
 
@@ -65,49 +68,6 @@ export const MintButton = () => {
     }, [connectedWallet]);
 
     return (
-        <div>
-            <h1>Tx Sample</h1>
-
-            {connectedWallet?.availablePost && !txResult && !txError && (
-                <button onClick={proceed}>Send 1USD to {'terra1m4ft8j6npuvvg4nru3lkhc59je7eapxrg5cna7'}</button>
-            )}
-
-            {txResult && (
-                <>
-                    <pre>{JSON.stringify(txResult, null, 2)}</pre>
-
-                    {connectedWallet && txResult && (
-                        <div>
-                            <a
-                                href={`https://finder.terra.money/${connectedWallet.network.chainID}/tx/${txResult.result.txhash}`}
-                                target="_blank"
-                                rel="noreferrer"
-                            >
-                                Open Tx Result in Terra Finder
-                            </a>
-                        </div>
-                    )}
-                </>
-            )}
-
-            {txError && <pre>{txError}</pre>}
-
-            {(!!txResult || !!txError) && (
-                <button
-                    onClick={() => {
-                        setTxResult(null);
-                        setTxError(null);
-                    }}
-                >
-                    Clear result
-                </button>
-            )}
-
-            {!connectedWallet && <p>Wallet not connected!</p>}
-
-            {connectedWallet && !connectedWallet.availablePost && (
-                <p>This connection does not support post()</p>
-            )}
-        </div>
+        <GhostLargeButton onClick={proceed}><TextButton1>MINT YOUR PASSPORT</TextButton1></GhostLargeButton>
     );
 }

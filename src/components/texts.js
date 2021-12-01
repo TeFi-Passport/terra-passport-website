@@ -2,19 +2,19 @@ import styled from "styled-components";
 
 export const Heading1 = styled.h1`
 font-family: RoadRadio;
-font-size: 34px;
+font-size: 62px;
 font-style: normal;
-font-weight: 700;
-line-height: 41px;
+font-weight: 900;
+line-height: 18px;
 letter-spacing: 0px;
 text-align: left;
 `;
 export const Heading2 = styled.h2`
 font-family: RoadRadio;
-font-size: 22px;
+font-size: 36px;
 font-style: normal;
-font-weight: 700;
-line-height: 28px;
+font-weight: 400;
+line-height: 36px;
 letter-spacing: 0px;
 text-align: left;
 `;
@@ -35,6 +35,16 @@ font-weight: 700;
 line-height: 20px;
 letter-spacing: 0px;
 text-align: left;
+`;
+export const TextLogo = styled.h3`
+color: white;
+font-family: RoadRadio;
+font-size: 24px;
+font-style: normal;
+font-weight: 900;
+line-height: 18px;
+letter-spacing: 0px;
+text-align: center;
 `;
 
 export const TextButton1 = styled.div`
