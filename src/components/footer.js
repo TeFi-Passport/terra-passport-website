@@ -8,6 +8,16 @@ import telegramLogo from "../res/images/Telegram.svg";
 import twitterLogo from "../res/images/Twitter.svg";
 import {lightOrange30} from "../constants/colors";
 
+const Icon = ({src, alt, height, style, link}) => {
+    return (
+        <img src={src}
+             alt={alt}
+             height={height}
+             style={style}
+             onClick={() => window.open(link)}/>
+    );
+}
+
 export const Footer = () => {
 
     return (
@@ -17,13 +27,16 @@ export const Footer = () => {
             <Box display='flex' flexDirection='row' justifyContent='space-between' alignItems='center'>
                 <TefiPassportLogo/>
                 <Box display='flex' flexDirection='row' justifyContent='center' alignItems='center'>
-                    <img src={telegramLogo} alt='telegram' height='19px'
-                         style={{marginRight: '44px', cursor: 'pointer'}}/>
-                    <img src={twitterLogo} alt='twitter' height='19px'
-                         style={{marginRight: '44px', cursor: 'pointer'}}/>
-                    <img src={mediumLogo} alt='medium' height='14px' style={{marginRight: '44px', cursor: 'pointer'}}/>
-                    <img src={githubLogo} alt='github' height='20px' style={{marginRight: '44px', cursor: 'pointer'}}/>
-                    <img src={gitBookLogo} alt='gitbook' height='21px' style={{cursor: 'pointer'}}/>
+                    <Icon src={telegramLogo} alt='telegram' height='19px'
+                          style={{marginRight: '44px', cursor: 'pointer'}} link={'https://twitter.com/Tefi_Passport'}/>
+                    <Icon src={twitterLogo} alt='twitter' height='19px'
+                          style={{marginRight: '44px', cursor: 'pointer'}} link={'https://twitter.com/Tefi_Passport'}/>
+                    <Icon src={mediumLogo} alt='medium' height='14px' style={{marginRight: '44px', cursor: 'pointer'}}
+                          link={'https://twitter.com/Tefi_Passport'}/>
+                    <Icon src={githubLogo} alt='github' height='20px' style={{marginRight: '44px', cursor: 'pointer'}}
+                          link={'https://github.com/TeFi-Passport'}/>
+                    <Icon src={gitBookLogo} alt='gitbook' height='21px' style={{cursor: 'pointer'}}
+                          link={'https://twitter.com/Tefi_Passport'}/>
                 </Box>
             </Box>
         </Box>
