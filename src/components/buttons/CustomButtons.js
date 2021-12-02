@@ -36,8 +36,8 @@ const SmallButton = ({onClick, style, children, className}) => {
     </CustomButton>;
 }
 
-export const DefaultLargeButton = ({onClick, children}) => {
-    return <LargeButton onClick={onClick} style={{background: tequila}}>
+export const DefaultLargeButton = ({onClick, children, backgroundColor = tequila, style}) => {
+    return <LargeButton onClick={onClick} style={{background: backgroundColor, ...style}}>
         {children}
     </LargeButton>;
 }

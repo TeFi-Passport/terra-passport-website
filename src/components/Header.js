@@ -3,7 +3,7 @@ import {ConnectButton} from "./buttons/ConnectButton";
 import Box from "@mui/material/Box";
 import {useWallet} from "@terra-money/use-wallet";
 import {AddressInfo} from "./buttons/AddressInfo";
-import {TefiPassportLogo} from "./logo";
+import {TefiPassportLogo} from "./TefiPassportLogo";
 
 export const Header = () => {
 

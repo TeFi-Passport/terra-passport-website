@@ -8,8 +8,9 @@ import {
 } from "@terra-money/use-wallet";
 import React, {useCallback, useEffect, useState} from "react";
 import {Fee, MsgSend} from "@terra-money/terra.js";
-import {GhostLargeButton} from "./CustomButtons";
-import {TextButton1} from "../texts";
+import {DefaultLargeButton, GhostLargeButton} from "./CustomButtons";
+import {Heading3, TextButton1} from "../texts";
+import {darkBackground, rajah} from "../../constants/colors";
 
 const TEST_TO_ADDRESS = 'terra1m4ft8j6npuvvg4nru3lkhc59je7eapxrg5cna7';
 
@@ -69,6 +70,13 @@ export const MintButton = () => {
     useEffect(() => console.log({txError, txResult}), [txError, txResult])
 
     return (
-        <GhostLargeButton onClick={proceed}><TextButton1>MINT YOUR PASSPORT</TextButton1></GhostLargeButton>
+        <DefaultLargeButton
+            style={{width: '100%'}}
+            onClick={proceed}
+            backgroundColor={rajah}>
+            <Heading3 style={{color: darkBackground}}>
+                MINT
+            </Heading3>
+        </DefaultLargeButton>
     );
 }
