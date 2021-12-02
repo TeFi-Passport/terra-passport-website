@@ -6,11 +6,10 @@ import {
     useConnectedWallet,
     UserDenied
 } from "@terra-money/use-wallet";
-import React, {useCallback, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {Fee, MsgSend} from "@terra-money/terra.js";
 import {GhostLargeButton} from "./CustomButtons";
 import {TextButton1} from "../texts";
-import Box from "@mui/material/Box";
 
 const TEST_TO_ADDRESS = 'terra1m4ft8j6npuvvg4nru3lkhc59je7eapxrg5cna7';
 
@@ -66,6 +65,8 @@ export const MintButton = () => {
                 }
             });
     }, [connectedWallet]);
+
+    useEffect(() => console.log({txError, txResult}), [txError, txResult])
 
     return (
         <GhostLargeButton onClick={proceed}><TextButton1>MINT YOUR PASSPORT</TextButton1></GhostLargeButton>

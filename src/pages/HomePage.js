@@ -32,7 +32,7 @@ export const HomePage = () => {
                     <MintButton/>
                 </Box>
                 <Box display='flex' flexDirection='column' flex={4} alignItems='center' justifyContent='center'>
-                    <img src={passportImage} alt='passport image' style={{
+                    <img src={passportImage} alt='passport' style={{
                         height: '457px', // todo: fix 'px' and be more adaptive?
                         width: '305px'
                     }}/>
