@@ -1,16 +1,18 @@
 import React, {useEffect} from "react";
 import {Header} from "../components/header";
 import {MintButton} from "../components/buttons/MintButton";
-import {generateScore} from "../utils/scoreGeneration";
 import Box from "@mui/material/Box";
 import {Footer} from "../components/footer";
 import passportImage from "../res/images/passportImage.png";
 import {Heading1, Heading2} from "../components/texts";
 import {orange1} from "../constants/colors";
+import {generateScore} from "../utils/scoreGeneration";
 
 export const HomePage = () => {
 
-    useEffect(() => generateScore(), [])
+    useEffect(() => {
+       window.score = generateScore;
+    });
 
     return (
         <Box className="App" display='flex' flexDirection='column' justifyContent='space-between' height='100vh'>

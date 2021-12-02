@@ -1,27 +1,39 @@
-import {fetchTransactionAnalysis} from "./toRemove";
 import {isLessThanXDays} from "./utils";
 
 /**
  *
  * @returns {Promise<number>} - the score associated with the address
  */
-export const generateScore = async () => {
+export const generateScore = async (address) => {
 
-    console.log('generating score');
-
-    /*const requestOptions = {
+    const requestOptions = {
         method: 'GET',
         redirect: 'follow',
         mode: 'cors'
     };
 
-    const res = await fetch("https://947o3z5ei5.execute-api.us-east-2.amazonaws.com/default/model_inputs?address=terra1m3tpuzxwjwulzza5vghuqlqx5x27tgmran4ate", requestOptions)
+    let res = await fetch("https://947o3z5ei5.execute-api.us-east-2.amazonaws.com/default/model_inputs?address=" + address, requestOptions)
 
-    console.log(res);
-    console.log(await res.json());*/
-    const res = await fetchTransactionAnalysis();
+    res = await res.json()
+    //const res = await fetchTransactionAnalysis();
     const txs = res.transactions;
-    console.log(getWenMoonScore(txs));
+    console.log({
+        gettingStarted: getGettingStartedScore(txs),
+        insomniac: getInsomniacScore(txs),
+        upAndAtThem: getUpAndAtThemScore(txs),
+        govDegen: getGovDegenScore(txs),
+        terraActivist: getTerraActivistScore(txs),
+        rockTheVote: 'not in the scope of the hackathon',
+        babyDegen: getBabyDegenScore(txs),
+        multiTokenate: getMultiTokenateScore(res.bank),
+        adultSwim: getAdultSwimScore(txs),
+        bagBuilder: getBagBuilderScore(txs),
+        inDeep: getInDeepScore(res.bank),
+        dumpProof: 'todo!',
+        wenMoon: getWenMoonScore(txs),
+        airdropAddict: getAirdropAddictScore(txs),
+        repeatCustomer: getRepeatCustomerScore(txs),
+    });
     return getGettingStartedScore(txs)
         + getInsomniacScore(txs)
         + getUpAndAtThemScore(txs)
@@ -124,6 +136,7 @@ const getGovDegenScore = (txs) => {
 const getTerraActivistScore = (txs) => {
     let tokens = [
         {gov: 'anc_gov_stakings', airdrop: 'anc_airdrop_claims'},
+        {gov: 'anc_gov_stakings', airdrop: 'anc_reward_distributions'},
         {gov: 'mir_gov_stakings', airdrop: 'mir_airdrop_claims'},
         {gov: 'pylon_gov_stakings', airdrop: 'mine_airdrop_claims'}
     ];
@@ -175,11 +188,11 @@ const getBabyDegenScore = (txs) => {
 
 /**
  * @param bank
- * @returns {number} 2 if the address has at least 5 different tokens in wallet - 0 otherwise.
+ * @returns {number} 2 if the address has at least 3 different tokens in wallet - 0 otherwise.
  * // todo: change
  */
 const getMultiTokenateScore = (bank) => {
-    return bank.balance.length >= 5 ? 2 : 0;
+    return bank.balance.length >= 3 ? 2 : 0;
 }
 
 /**
@@ -283,6 +296,7 @@ const getDumpProofScore = (txs) => {
 const getWenMoonScore = (txs) => {
     let airdrops = [
         "anc_airdrop_claims",
+        "anc_reward_distributions",
         "mir_airdrop_claims",
         "mine_airdrop_claims",
     ];
@@ -304,16 +318,20 @@ const getWenMoonScore = (txs) => {
  */
 const getAirdropAddictScore = (txs) => {
     let airdrops = [
-        "anc_airdrop_claims",
-        "mir_airdrop_claims",
-        "mine_airdrop_claims",
+        ["anc_reward_distributions", "anc_airdrop_claims",],
+        ["mir_airdrop_claims"],
+        ["mine_airdrop_claims"],
     ];
     let airdropClaimed = 0;
-    airdrops.forEach((c) => {
-        const tx = txs.filter(i => i.summary[c].count !== 0);
-        if (tx) {
-            airdropClaimed++;
-        }
+    airdrops.forEach((token) => {
+        let airdropForThisToken = false;
+        token.forEach(contractName => {
+            const tx = txs.find(i => i.summary[contractName].count !== 0);
+            if (tx && !airdropForThisToken) {
+                airdropClaimed++;
+                airdropForThisToken = true;
+            }
+        });
     });
     return airdropClaimed >= 2 ? 2 : 0;
 }
@@ -324,21 +342,23 @@ const getAirdropAddictScore = (txs) => {
  */
 const getRepeatCustomerScore = (txs) => {
     let airdrops = [
-        "anc_airdrop_claims",
-        "mir_airdrop_claims",
-        "mine_airdrop_claims",
+        ["anc_reward_distributions", "anc_airdrop_claims",],
+        ["mir_airdrop_claims"],
+        ["mine_airdrop_claims"],
     ];
     let ok = false;
-    airdrops.forEach((c) => {
-
-        const filteredTxs = txs.filter(i => i.summary[c].count !== 0);
+    airdrops.forEach((token) => {
         let numberClaimed = 0;
 
-        filteredTxs.forEach((tx) => {
-            if (tx) {
-                numberClaimed += tx.summary[c].count
-            }
-        });
+        token.forEach((contractName) => {
+            const filteredTxs = txs.filter(i => i.summary[contractName].count !== 0);
+
+            filteredTxs.forEach((tx) => {
+                if (tx) {
+                    numberClaimed += tx.summary[contractName].count
+                }
+            });
+        })
 
         if (numberClaimed >= 2) {
             ok = true;
