@@ -17,11 +17,13 @@ export const Footer = () => {
             <Box display='flex' flexDirection='row' justifyContent='space-between' alignItems='center'>
                 <TefiPassportLogo/>
                 <Box display='flex' flexDirection='row' justifyContent='center' alignItems='center'>
-                    <img src={telegramLogo} alt='telegram' height='19px' style={{marginRight: '44px'}}/>
-                    <img src={twitterLogo} alt='twitter' height='19px' style={{marginRight: '44px'}}/>
-                    <img src={mediumLogo} alt='medium' height='14px' style={{marginRight: '44px'}}/>
-                    <img src={githubLogo} alt='github' height='20px' style={{marginRight: '44px'}}/>
-                    <img src={gitBookLogo} alt='gitbook' height='21px'/>
+                    <img src={telegramLogo} alt='telegram' height='19px'
+                         style={{marginRight: '44px', cursor: 'pointer'}}/>
+                    <img src={twitterLogo} alt='twitter' height='19px'
+                         style={{marginRight: '44px', cursor: 'pointer'}}/>
+                    <img src={mediumLogo} alt='medium' height='14px' style={{marginRight: '44px', cursor: 'pointer'}}/>
+                    <img src={githubLogo} alt='github' height='20px' style={{marginRight: '44px', cursor: 'pointer'}}/>
+                    <img src={gitBookLogo} alt='gitbook' height='21px' style={{cursor: 'pointer'}}/>
                 </Box>
             </Box>
         </Box>
