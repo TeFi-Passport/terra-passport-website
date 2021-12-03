@@ -1,12 +1,7 @@
 import {
-    CreateTxFailed,
-    Timeout,
-    TxFailed,
-    TxUnspecifiedError,
     useConnectedWallet,
-    UserDenied
 } from "@terra-money/use-wallet";
-import React, {useCallback} from "react";
+import React from "react";
 import {DefaultLargeButton} from "./CustomButtons";
 import {Heading3} from "../texts";
 import {darkBackground, rajah} from "../../constants/colors";

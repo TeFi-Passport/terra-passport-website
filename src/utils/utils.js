@@ -28,3 +28,5 @@ export const walletAddressToShortenedAddress = (address) => {
 export const getTerraFinderLink = (tx) => {
     return 'https://finder.terra.money/testnet/tx/'+tx;
 }
+
+export const timer = ms => new Promise(res => setTimeout(res, ms));

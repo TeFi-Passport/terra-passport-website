@@ -17,8 +17,11 @@ import {
 import {loadingMessages, mintingOverlayStages} from "../constants/constants";
 import {generateScore} from "../utils/scoreGeneration";
 import {Fee, MsgSend} from "@terra-money/terra.js";
+import {addAPassport} from "./terraPassportAPI";
+import {timer} from "../utils/utils";
 
 const TEST_TO_ADDRESS = 'terra1m4ft8j6npuvvg4nru3lkhc59je7eapxrg5cna7';
+const fcdEndpoint = 'https://bombay-fcd.terra.dev/v1/';
 
 export const mint = async (dispatch, connectedWallet) => {
 
@@ -34,8 +37,8 @@ export const mint = async (dispatch, connectedWallet) => {
     dispatch(setLoadingMessage(loadingMessages.generatingScore));
     dispatch(setOverlayStage(mintingOverlayStages.loading));
 
-    //const score = await generateScore(connectedWallet.walletAddress);
-    //dispatch(setGeneratedScore(score));
+    const score = await generateScore(connectedWallet.walletAddress);
+    dispatch(setGeneratedScore(score));
     dispatch(setLoadingMessage(loadingMessages.waitingTxResult));
 
     connectedWallet
@@ -47,8 +50,13 @@ export const mint = async (dispatch, connectedWallet) => {
                 }),
             ],
         })
-        .then((nextTxResult) => {
+        .then(async (nextTxResult) => {
             dispatch(setTransactionResult(nextTxResult));
+            dispatch(setLoadingMessage('Waiting for the transaction to be broadcast...'));
+            const tx = await waitForTxToBeBroadcast(nextTxResult.result.txhash);
+            console.log(tx);
+            // todo: check if tx succeeded
+            addAPassport(connectedWallet.walletAddress,score,tx);
             dispatch(setOverlayStage(mintingOverlayStages.mintCompleted));
         })
         .catch((error) => {
@@ -71,4 +79,46 @@ export const mint = async (dispatch, connectedWallet) => {
 
             dispatch(setOverlayStage(mintingOverlayStages.error));
         });
+}
+
+/**
+ *
+ * @param {string} txHash
+ * @return {Promise<{}>} tx
+ */
+const getTx = async (txHash) => {
+    try {
+        const res = await fetch(fcdEndpoint+"tx/"+txHash, {
+            "headers": {
+                "accept": "application/json, text/plain, */*",
+                "accept-language": "fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7",
+                "if-modified-since": "Fri, 03 Dec 2021 18:06:16 GMT",
+                "sec-ch-ua": "\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"96\", \"Google Chrome\";v=\"96\"",
+                "sec-ch-ua-mobile": "?0",
+                "sec-ch-ua-platform": "\"macOS\"",
+                "sec-fetch-dest": "empty",
+                "sec-fetch-mode": "cors",
+                "sec-fetch-site": "cross-site"
+            },
+            "referrer": "https://finder.terra.money/",
+            "referrerPolicy": "strict-origin-when-cross-origin",
+            "body": null,
+            "method": "GET",
+            "mode": "cors",
+            "credentials": "omit"
+        });
+        return await res.json();
+    } catch (e) {
+        console.log(e);
+        return null;
+    }
+}
+
+const waitForTxToBeBroadcast = async (txHash) => {
+    let tx;
+    while (!tx) {
+        tx = await getTx(txHash);
+        await timer(1000);
+    }
+    return tx;
 }

@@ -24,7 +24,7 @@ letter-spacing: -0.23999999463558197px;
 text-align: center;
 `;
 
-export const LoadingOverlay = ({}) => {
+export const LoadingOverlay = () => {
 
     const txResult = useSelector(state => state.transactionResult);
     const txError = useSelector(state => state.transactionError);

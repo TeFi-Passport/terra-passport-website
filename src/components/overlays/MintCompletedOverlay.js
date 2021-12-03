@@ -33,7 +33,7 @@ const GoToMyPassport = () => {
     );
 }
 
-export const MintCompletedOverlay = ({}) => {
+export const MintCompletedOverlay = () => {
 
     return (
         <AdvancedOverlayLayout button1={<GoToMyPassport/>}

@@ -3,11 +3,7 @@ import React from "react";
 import {CustomCard} from "../Card";
 import styled from "styled-components";
 import {TefiPassportSimpleLogo} from "../TefiPassportLogo";
-import {grey, tequila} from "../../constants/colors";
-import {MintButton} from "../buttons/MintButton";
-import {Heading3} from "../texts";
-import {setOverlayStage} from "../../store/action";
-import {mintingOverlayStages} from "../../constants/constants";
+import {grey} from "../../constants/colors";
 
 export const Overlay = ({children, style}) => {
     return (

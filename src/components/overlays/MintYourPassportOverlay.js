@@ -18,7 +18,7 @@ const NotNowButton = () => {
     );
 }
 
-export const MintYourPassportOverlay = ({}) => {
+export const MintYourPassportOverlay = () => {
 
     return (
         <AdvancedOverlayLayout button1={<MintButton/>}
