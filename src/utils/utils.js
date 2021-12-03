@@ -19,3 +19,12 @@ export const walletAddressToShortenedAddress = (address) => {
 
     return address.substring(0, 6) + '....' + address.substring(address.length - 7, address.length)
 }
+
+/**
+ * Build a link to see the tx in terra finder
+ * @param {string} tx - the tx id
+ * @returns {string}
+ */
+export const getTerraFinderLink = (tx) => {
+    return 'https://finder.terra.money/testnet/tx/'+tx;
+}

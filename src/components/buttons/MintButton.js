@@ -6,22 +6,32 @@ import {
     useConnectedWallet,
     UserDenied
 } from "@terra-money/use-wallet";
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useCallback} from "react";
 import {Fee, MsgSend} from "@terra-money/terra.js";
-import {DefaultLargeButton, GhostLargeButton} from "./CustomButtons";
-import {Heading3, TextButton1} from "../texts";
+import {DefaultLargeButton} from "./CustomButtons";
+import {Heading3} from "../texts";
 import {darkBackground, rajah} from "../../constants/colors";
+import {useDispatch} from "react-redux";
+import {
+    setGeneratedScore,
+    setLoadingMessage,
+    setOverlayStage,
+    setTransactionError,
+    setTransactionResult
+} from "../../store/action";
+import {generateScore} from "../../utils/scoreGeneration";
+import {loadingMessages, mintingOverlayStages} from "../../constants/constants";
 
 const TEST_TO_ADDRESS = 'terra1m4ft8j6npuvvg4nru3lkhc59je7eapxrg5cna7';
 
 export const MintButton = () => {
 
-    const [txResult, setTxResult] = useState(null);
-    const [txError, setTxError] = useState(null);
+    const dispatch = useDispatch()
 
     const connectedWallet = useConnectedWallet();
 
-    const proceed = useCallback(() => {
+    const proceed = useCallback(async () => {
+
         if (!connectedWallet) {
             return;
         }
@@ -31,8 +41,12 @@ export const MintButton = () => {
             return;
         }
 
-        setTxResult(null);
-        setTxError(null);
+        dispatch(setLoadingMessage(loadingMessages.generatingScore));
+        dispatch(setOverlayStage(mintingOverlayStages.loading));
+
+        const score = await generateScore(connectedWallet.walletAddress);
+        dispatch(setGeneratedScore(score));
+        dispatch(setLoadingMessage(loadingMessages.waitingTxResult));
 
         connectedWallet
             .post({
@@ -44,30 +58,29 @@ export const MintButton = () => {
                 ],
             })
             .then((nextTxResult) => {
-                console.log(nextTxResult);
-                setTxResult(nextTxResult);
+                dispatch(setTransactionResult(nextTxResult));
+                dispatch(setOverlayStage(mintingOverlayStages.mintCompleted));
             })
             .catch((error) => {
                 if (error instanceof UserDenied) {
-                    setTxError('User Denied');
+                    dispatch(setTransactionError('User Denied'));
                 } else if (error instanceof CreateTxFailed) {
-                    setTxError('Create Tx Failed: ' + error.message);
+                    dispatch(setTransactionError('Create Tx Failed: ' + error.message));
                 } else if (error instanceof TxFailed) {
-                    setTxError('Tx Failed: ' + error.message);
+                    dispatch(setTransactionError('Tx Failed: ' + error.message));
                 } else if (error instanceof Timeout) {
-                    setTxError('Timeout');
+                    dispatch(setTransactionError('Timeout'));
                 } else if (error instanceof TxUnspecifiedError) {
-                    setTxError('Unspecified Error: ' + error.message);
+                    dispatch(setTransactionError('Unspecified Error: ' + error.message));
                 } else {
-                    setTxError(
+                    dispatch(setTransactionError(
                         'Unknown Error: ' +
                         (error instanceof Error ? error.message : String(error)),
-                    );
+                    ));
                 }
             });
     }, [connectedWallet]);
 
-    useEffect(() => console.log({txError, txResult}), [txError, txResult])
 
     return (
         <DefaultLargeButton
