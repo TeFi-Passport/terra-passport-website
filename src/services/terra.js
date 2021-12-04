@@ -9,12 +9,12 @@ import {
 import {
     setGeneratedScore,
     setLoadingMessage,
-    setOverlayStage,
+    setOverlayStage, setPassport,
     setTransactionError,
     setTransactionResult
 } from "../store/action";
 
-import {loadingMessages, mintingOverlayStages} from "../constants/constants";
+import {messages, mintingOverlayStages} from "../constants/constants";
 import {generateScore} from "../utils/scoreGeneration";
 import {Fee, MsgSend} from "@terra-money/terra.js";
 import {addAPassport} from "./terraPassportAPI";
@@ -34,12 +34,12 @@ export const mint = async (dispatch, connectedWallet) => {
         return;
     }
 
-    dispatch(setLoadingMessage(loadingMessages.generatingScore));
+    dispatch(setLoadingMessage(messages.generatingScore));
     dispatch(setOverlayStage(mintingOverlayStages.loading));
 
     const score = await generateScore(connectedWallet.walletAddress);
     dispatch(setGeneratedScore(score));
-    dispatch(setLoadingMessage(loadingMessages.waitingTxResult));
+    dispatch(setLoadingMessage(messages.waitingTxResult));
 
     connectedWallet
         .post({
@@ -56,8 +56,9 @@ export const mint = async (dispatch, connectedWallet) => {
             const tx = await waitForTxToBeBroadcast(nextTxResult.result.txhash);
             console.log(tx);
             // todo: check if tx succeeded
-            addAPassport(connectedWallet.walletAddress,score,tx);
             dispatch(setOverlayStage(mintingOverlayStages.mintCompleted));
+            const passport = await addAPassport(connectedWallet.walletAddress,score,tx);
+            dispatch(setPassport(passport));
         })
         .catch((error) => {
             if (error instanceof UserDenied) {

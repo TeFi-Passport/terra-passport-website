@@ -43,3 +43,12 @@ export const setLoadingMessage = value => ({
     value,
 });
 
+/**
+ *
+ * @param {{}} value - the passport
+ * @returns {{type: string, value: *}}
+ */
+export const setPassport = value => ({
+    type: 'SET_PASSPORT',
+    value,
+});

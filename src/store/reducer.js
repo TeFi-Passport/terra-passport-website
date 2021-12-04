@@ -32,4 +32,8 @@ export default combineReducers({
     generatedScore: createReducer(null, {
         SET_GENERATED_SCORE: (state, {value}) => value,
     }),
+    // the object containing all the info of the passport
+    passport: createReducer(null, {
+        SET_PASSPORT: (state, {value}) => value,
+    }),
 });

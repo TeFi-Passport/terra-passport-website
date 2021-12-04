@@ -1,3 +1,5 @@
+import {setPassport} from "../store/action";
+
 const apiEndpoint = 'https://o6n5xqp6c2.execute-api.us-east-2.amazonaws.com';
 
 /**
@@ -16,10 +18,18 @@ export const addAPassport = async (address, score, tx) => {
         "network": tx.chainId
     };
 
-    console.log(raw);
+    return await request('PUT', "/passports", raw);
+}
 
-    const json = await request('PUT', '/endpoint', raw);
-    console.log(json);
+/**
+ * Retrieve the passport corresponding to the address & store it in the store
+ * @param dispatch - the dispatch instance to add the passport to the store
+ * @param address
+ * @returns {Promise<*>}
+ */
+export const retrievePassport = async (dispatch, address) => {
+    const res = await request('GET', "/passports/"+address);
+    dispatch(setPassport(res));
 }
 
 /**
@@ -29,15 +39,17 @@ export const addAPassport = async (address, score, tx) => {
  * @param {{}} raw - the body of the request
  * @returns {Promise<any>}
  */
-const request = async (method, endpoint, raw) => {
+const request = async (method, endpoint, raw = null) => {
 
     const requestOptions = {
         method: method,
         headers: buildHeader(),
-        body: JSON.stringify(raw)
     };
 
-    const res = await fetch(apiEndpoint + "/passports", requestOptions);
+    if (raw)
+        requestOptions.body = JSON.stringify(raw);
+
+    const res = await fetch(apiEndpoint + endpoint, requestOptions);
 
     return await res.json();
 }

@@ -11,7 +11,8 @@ export const mintingOverlayStages = {
     error: {name: 'error', component: ErrorOverlay},
 }
 
-export const loadingMessages = {
+export const messages = {
     generatingScore: 'Score calculation in progress...',
     waitingTxResult: 'Waiting for transaction confirmation...',
+    pleaseConnectWallet: 'Please connect your wallet',
 }
