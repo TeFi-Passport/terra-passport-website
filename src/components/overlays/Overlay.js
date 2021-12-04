@@ -6,6 +6,7 @@ import {TefiPassportSimpleLogo} from "../TefiPassportLogo";
 import {grey} from "../../constants/colors";
 
 export const Overlay = ({children, style}) => {
+
     return (
         <Box display='flex'
              flexDirection='column'

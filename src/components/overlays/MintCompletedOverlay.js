@@ -5,6 +5,7 @@ import {Heading3} from "../texts";
 import store from "../../store/store";
 import {DefaultLargeButton} from "../buttons/CustomButtons";
 import {getTerraFinderLink} from "../../utils/utils";
+import {useNavigate} from "react-router-dom";
 
 const SeeTxIdButton = () => {
 
@@ -19,11 +20,14 @@ const SeeTxIdButton = () => {
 }
 
 const GoToMyPassport = () => {
+
+    const navigate = useNavigate();
+
     return (
         <DefaultLargeButton
             style={{width: '100%'}}
             onClick={() => {
-                // todo:
+                navigate('/passport');
             }}
             backgroundColor={rajah}>
             <Heading3 style={{color: darkBackground}}>
