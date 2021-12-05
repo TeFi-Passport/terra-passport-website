@@ -40,6 +40,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.background {
   background-image: url("./res/images/background.png");
   background-size: cover;
 }

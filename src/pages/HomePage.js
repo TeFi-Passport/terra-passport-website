@@ -27,7 +27,7 @@ export const HomePage = () => {
     }
 
     return (
-        <Box display='flex' flexDirection='column'>
+        <Box display='flex' flexDirection='column' className='background'>
             {overlayStage.name !== mintingOverlayStages.hidden.name && (<Overlay/>)}
             <Box display='flex' flexDirection='column' justifyContent='space-between' height='100vh'>
                 <Header/>

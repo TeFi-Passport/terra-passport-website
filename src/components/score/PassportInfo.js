@@ -18,7 +18,7 @@ text-align: left;
 export const PassportInfo = ({height, address, chainId, block, style}) => {
     return (
         <Card style={{height: height, ...style}}>
-            <Box display='flex' flexDirection='column' justifyContent='center'>
+            <Box display='flex' flexDirection='column' justifyContent='center' height={height}>
                 <Box display='flex' flexDirection='column'>
                     <Heading3 style={{color: grey5}}>WALLET ADDRESS</Heading3>
                     <SubTitle style={{color: grey}}>{address}</SubTitle>

@@ -38,7 +38,7 @@ export const mint = async (dispatch, connectedWallet) => {
     dispatch(setOverlayStage(mintingOverlayStages.loading));
 
     const score = await generateScore(connectedWallet.walletAddress);
-    dispatch(setGeneratedScore(score));
+    dispatch(setGeneratedScore(score.score));
     dispatch(setLoadingMessage(messages.waitingTxResult));
 
     connectedWallet

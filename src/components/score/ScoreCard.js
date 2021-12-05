@@ -21,7 +21,7 @@ letter-spacing: 0px;
 text-align: left;
 `;
 
-export const ScoreText = styled.h1`
+const ScoreText = styled.h1`
 font-family: RoadRadio;
 font-size: 64px;
 font-style: normal;
@@ -31,7 +31,7 @@ letter-spacing: 0px;
 text-align: left;
 `;
 
-export const ComparisonText = styled.h1`
+const ComparisonText = styled.h1`
 font-family: RoadRadio;
 font-size: 15px;
 font-style: normal;
@@ -41,7 +41,7 @@ letter-spacing: 0px;
 text-align: left;
 `;
 
-export const EvolutionText = styled.h1`
+const EvolutionText = styled.h1`
 font-family: RoadRadio;
 font-size: 15px;
 font-style: normal;

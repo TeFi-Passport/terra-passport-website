@@ -5,17 +5,18 @@ const apiEndpoint = 'https://o6n5xqp6c2.execute-api.us-east-2.amazonaws.com';
 /**
  * Register the passport in the Tefi Passport db
  * @param {string} address
- * @param {number} score
+ * @param {{}} score info
  * @param {{}} tx - the transaction info
  */
 export const addAPassport = async (address, score, tx) => {
 
     const raw = {
         "address": address,
-        "score": score,
+        "score": score.score,
         "transactionID": tx.txhash,
         "block": tx.height,
-        "network": tx.chainId
+        "network": tx.chainId,
+        "scoreDetail": score,
     };
 
     return await request('PUT', "/passports", raw);

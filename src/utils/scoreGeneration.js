@@ -34,7 +34,8 @@ export const generateScore = async (address) => {
         airdropAddict: getAirdropAddictScore(txs),
         repeatCustomer: getRepeatCustomerScore(txs),
     });
-    return getGettingStartedScore(txs)
+
+    const score = getGettingStartedScore(txs)
         + getInsomniacScore(txs)
         + getUpAndAtThemScore(txs)
         + getGovDegenScore(txs)
@@ -48,7 +49,26 @@ export const generateScore = async (address) => {
         + getDumpProofScore(txs)
         + getWenMoonScore(txs)
         + getAirdropAddictScore(txs)
-        + getRepeatCustomerScore(txs)
+        + getRepeatCustomerScore(txs);
+
+    return {
+        score: score,
+        gettingStarted: getGettingStartedScore(txs),
+        insomniac: getInsomniacScore(txs),
+        upAndAtThem: getUpAndAtThemScore(txs),
+        govDegen : getGovDegenScore(txs),
+        terraActivist : getTerraActivistScore(txs),
+        rockTheVote : getRockTheVoteScore(txs),
+        babyDegen : getBabyDegenScore(txs),
+        multiTokenate : getMultiTokenateScore(res.bank),
+        adultSwim : getAdultSwimScore(txs),
+        bagBuilder : getBagBuilderScore(txs),
+        inDeep : getInDeepScore(res.bank),
+        dumpProof : getDumpProofScore(txs),
+        wenMoon : getWenMoonScore(txs),
+        airdropAddict : getAirdropAddictScore(txs),
+        repeatCustomer : getRepeatCustomerScore(txs),
+    };
 }
 
 /**
