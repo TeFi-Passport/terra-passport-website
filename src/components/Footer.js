@@ -35,7 +35,7 @@ export const Footer = () => {
                     <Icon src={githubLogo} alt='github' height='20px' style={{marginRight: '44px', cursor: 'pointer'}}
                           link={'https://github.com/TeFi-Passport'}/>
                     <Icon src={gitBookLogo} alt='gitbook' height='21px' style={{cursor: 'pointer'}}
-                          link={'https://twitter.com/Tefi_Passport'}/>
+                          link={'https://tefipassport.gitbook.io/wiki/'}/>
                 </Box>
             </Box>
         </Box>
