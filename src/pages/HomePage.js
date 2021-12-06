@@ -5,20 +5,33 @@ import {Footer} from "../components/Footer";
 import passportImage from "../res/images/passportImage.png";
 import {Heading1, Heading2, TextButton1} from "../components/texts";
 import {orange1} from "../constants/colors";
-import {generateScore} from "../utils/scoreGeneration";
 import {GhostLargeButton} from "../components/buttons/CustomButtons";
 import {useDispatch, useSelector} from "react-redux";
 import {setOverlayStage} from "../store/action";
 import {mintingOverlayStages} from "../constants/constants";
+import {useConnectedWallet} from "@terra-money/use-wallet";
+import {retrievePassport} from "../services/terraPassportAPI";
+import {useNavigate} from "react-router-dom";
 
 export const HomePage = () => {
 
     const overlayStage = useSelector(state => state.overlayStage)
+    const passport = useSelector(state => state.passport);
     const dispatch = useDispatch();
+    const connectedWallet = useConnectedWallet();
+    const navigate = useNavigate();
 
     useEffect(() => {
-        window.score = generateScore;
-    });
+        if (passport && overlayStage.name !== 'mintCompleted') {
+            navigate('/passport');
+        } else {
+            try {
+                if (connectedWallet.walletAddress) {
+                    retrievePassport(dispatch, connectedWallet.walletAddress);
+                }
+            } catch (e) {}
+        }
+    }, [connectedWallet, passport]);
 
     const Overlay = overlayStage.component;
 
