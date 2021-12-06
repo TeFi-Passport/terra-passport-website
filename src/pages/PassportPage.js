@@ -31,8 +31,8 @@ const PassportCards = ({passport}) => {
             <ScoreCard score={passport.score} meanScore={10} height={height} evolution={-2.4}/>
             <PassportInfo height={height} address={passport.address} block={passport.block} chainId={passport.network}
                           style={{
-                              paddingLeft: '49px',
-                              paddingRight: '64px',
+                              paddingLeft: '29px',
+                              paddingRight: '34px',
                           }}/>
         </Box>
     );
@@ -83,7 +83,7 @@ const ScoreDetail = ({passport}) => {
 
     return (
         <Box display='flex' flexDirection='row' justifyContent='space-around'
-             style={{marginTop: '50px', marginLeft: '20px', marginRight: '20px'}}>
+             style={{marginTop: '50px', marginLeft: '20px', marginRight: '20px', width: '80%'}}>
             <ScoreDetailCard score={activityScore} title="ACTIVITY" average={3.1} evolution={2.4}/>
             <ScoreDetailCard score={govScore} title="GOVERNANCE" average={0.9} evolution={-1.3}/>
             <ScoreDetailCard score={degenScore} title="DEGENERACY" average={3.1} evolution={1}/>
@@ -133,9 +133,13 @@ export const PassportPage = () => {
             return <Loader/>;
         return (
             <Box display='flex' flexDirection='column' width='100%'>
-                <PassportCards passport={passport}/>
+                <Box display='flex' flexDirection='column' width='100%' alignItems='center'>
+                    <Box display='flex' flexDirection='column' width='80%'>
+                        <PassportCards passport={passport}/>
+                    </Box>
+                </Box>
                 <Box display='flex' flexDirection='column' alignItems='center' style={{marginTop: '40px'}}>
-                    <Box display='flex' flexDirection='row' width='90%' justifyContent='space-between'
+                    <Box display='flex' flexDirection='row' width='75%' justifyContent='space-between'
                          alignItems='center'>
                         <Box display='flex' flexDirection='column'>
                             <Heading3 style={{color: grey5}}>SUMMARY</Heading3>
@@ -143,12 +147,12 @@ export const PassportPage = () => {
                         </Box>
                         <TextButton2 style={{color: cheokee, marginTop: '8px'}}>ABOUT METRIC DETAILS</TextButton2>
                     </Box>
+                    <ScoreDetail passport={passport} width='75%'/>
                 </Box>
-                <ScoreDetail passport={passport}/>
                 <Box style={{marginBottom: '30px'}}/>
             </Box>
-        )
-    }
+        );
+    };
 
     return (
         <Box display='flex' flexDirection='column' justifyContent='space-between' height='100vh'>

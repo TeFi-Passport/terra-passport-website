@@ -47,14 +47,14 @@ text-align: center;
 
 export const ScoreDetailCard = ({height, title, score, evolution, average}) => {
     return (
-      <Card style={{width: '227px'}}>
+      <Card style={{width: '195px'}}>
           <Box display='flex' flexDirection='column' style={{height: height}}
                justifyContent='center' alignItems='center'>
               <Title style={{color: grey5}}>{title}</Title>
               <ScoreText style={{color: tequila}}>{score}</ScoreText>
               <EvolutionText style={{color: evolution < 0 ? red1 : green1}}>{evolution}%</EvolutionText>
               <AVGText style={{color: grey5}}>AVG {average}</AVGText>
-              <img src={down_arrow} width='11px' alt='down arrow' style={{marginTop: '16px',marginBottom: '16px'}}/>
+              <img src={down_arrow} width='11px' alt='down arrow' style={{marginTop: '16px',marginBottom: /*'16px'*/ 0, opacity: 0}}/>
           </Box>
       </Card>
     );

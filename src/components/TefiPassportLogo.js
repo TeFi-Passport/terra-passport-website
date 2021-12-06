@@ -3,10 +3,10 @@ import React from "react";
 import logo from '../res/images/logo.svg';
 import {TextLogo} from "./texts";
 
-export const TefiPassportLogo = () => {
+export const TefiPassportLogo = ({style, height = '28px'}) => {
     return (
-        <Box display='flex' flexDirection='row' height='33px' alignItems='center'>
-            <img src={logo} style={{marginRight: '18px', height: '33px'}} alt='logo'/>
+        <Box display='flex' flexDirection='row' height={height} alignItems='center' style={{...style}}>
+            <img src={logo} style={{marginRight: '18px', height: height}} alt='logo'/>
             <TextLogo>TEFI PASSPORT</TextLogo>
         </Box>
     );

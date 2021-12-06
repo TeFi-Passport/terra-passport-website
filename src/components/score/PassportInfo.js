@@ -14,13 +14,22 @@ line-height: 18px;
 letter-spacing: 0px;
 text-align: left;
 `;
+export const Heading3Bigger = styled.h3`
+font-family: RoadRadio;
+font-size: 22px;
+font-style: normal;
+font-weight: 700;
+line-height: 0px;
+letter-spacing: 0px;
+text-align: left;
+`;
 
 export const PassportInfo = ({height, address, chainId, block, style}) => {
     return (
         <Card style={{height: height, ...style}}>
             <Box display='flex' flexDirection='column' justifyContent='center' height={height}>
                 <Box display='flex' flexDirection='column'>
-                    <Heading3 style={{color: grey5}}>WALLET ADDRESS</Heading3>
+                    <Heading3Bigger style={{color: grey5}}>WALLET ADDRESS</Heading3Bigger>
                     <SubTitle style={{color: grey}}>{address}</SubTitle>
                 </Box>
                 <Box display='flex' flexDirection='column'>

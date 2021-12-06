@@ -59,7 +59,7 @@ const EvolutionStat = ({stat}) => {
 
 export const ScoreCard = ({score, evolution, meanScore, height, style}) => {
     return (
-        <Card horizontalPadding={'77px'} style={{height: height, ...style}}>
+        <Card horizontalPadding={'60px'} style={{height: height, ...style}}>
             <Box display='flex' flexDirection='column' style={{height: height}}
                  justifyContent='center'>
                 <Title style={{color: grey5}}>SCORE</Title>

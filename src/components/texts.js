@@ -11,7 +11,7 @@ text-align: left;
 `;
 export const Heading2 = styled.h2`
 font-family: RoadRadio;
-font-size: 36px;
+font-size: 26px;
 font-style: normal;
 font-weight: 400;
 line-height: 36px;
