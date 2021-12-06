@@ -35,6 +35,7 @@ export const generateScore = async (address) => {
         repeatCustomer: getRepeatCustomerScore(txs),
     });
 
+
     const score = getGettingStartedScore(txs)
         + getInsomniacScore(txs)
         + getUpAndAtThemScore(txs)
@@ -68,8 +69,9 @@ export const generateScore = async (address) => {
         wenMoon : getWenMoonScore(txs),
         airdropAddict : getAirdropAddictScore(txs),
         repeatCustomer : getRepeatCustomerScore(txs),
+        lastTxHeight: res.transactions[0].height
     };
-}
+};
 
 /**
  * @param txs

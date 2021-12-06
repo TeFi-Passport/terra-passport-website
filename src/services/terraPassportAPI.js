@@ -7,8 +7,9 @@ const apiEndpoint = 'https://o6n5xqp6c2.execute-api.us-east-2.amazonaws.com';
  * @param {string} address
  * @param {{}} score info
  * @param {{}} tx - the transaction info
+ * @param {string} imageLink
  */
-export const addAPassport = async (address, score, tx) => {
+export const addAPassport = async (address, score, tx, imageLink) => {
 
     const raw = {
         "address": address,
@@ -17,6 +18,7 @@ export const addAPassport = async (address, score, tx) => {
         "block": tx.height,
         "network": tx.chainId,
         "scoreDetail": score,
+        "imageLink": imageLink
     };
 
     return await request('PUT', "/passports", raw);

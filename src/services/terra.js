@@ -16,12 +16,14 @@ import {
 
 import {messages, mintingOverlayStages} from "../constants/constants";
 import {generateScore} from "../utils/scoreGeneration";
-import {Fee, MsgSend} from "@terra-money/terra.js";
+import {Fee, MsgExecuteContract} from "@terra-money/terra.js";
 import {addAPassport} from "./terraPassportAPI";
 import {timer} from "../utils/utils";
+import {getImageLinkFromIPFSLink, getJSONDataLinkFromIPFSHash, savePassportImageToIPFS} from "./IPFSHosting";
 
-const TEST_TO_ADDRESS = 'terra1m4ft8j6npuvvg4nru3lkhc59je7eapxrg5cna7';
+const contractAddress = 'terra1nc4jufa868gy205fvm9wx5nm4ssugmtda0wptl';
 const fcdEndpoint = 'https://bombay-fcd.terra.dev/v1/';
+const chainId = 'bombay-12';
 
 export const mint = async (dispatch, connectedWallet) => {
 
@@ -38,6 +40,10 @@ export const mint = async (dispatch, connectedWallet) => {
     dispatch(setOverlayStage(mintingOverlayStages.loading));
 
     const score = await generateScore(connectedWallet.walletAddress);
+    const ipfsInfo = await savePassportImageToIPFS(connectedWallet.walletAddress, chainId, score.score, score.lastTxHeight);
+    const ipfsLink = getJSONDataLinkFromIPFSHash(ipfsInfo.IpfsHash);
+    console.log(ipfsInfo);
+    console.log(ipfsLink);
     dispatch(setGeneratedScore(score.score));
     dispatch(setLoadingMessage(messages.waitingTxResult));
 
@@ -45,9 +51,18 @@ export const mint = async (dispatch, connectedWallet) => {
         .post({
             fee: new Fee(1000000, '200000uusd'),
             msgs: [
-                new MsgSend(connectedWallet.walletAddress, TEST_TO_ADDRESS, {
-                    uusd: 1000000,
-                }),
+                new MsgExecuteContract(
+                    connectedWallet.walletAddress, // sender
+                    contractAddress, // contract account address
+                    {
+                        'mint': {
+                            'owner': 'terra1dy8wsxphneauw2wtldecem66xwa69y6zpd6gjh',
+                            'token_id': ipfsInfo.IpfsHash,
+                            'token_uri': ipfsLink,
+                        }
+                    }, // handle msg
+                    {} // coins
+                )
             ],
         })
         .then(async (nextTxResult) => {
@@ -57,7 +72,8 @@ export const mint = async (dispatch, connectedWallet) => {
             console.log(tx);
             // todo: check if tx succeeded
             dispatch(setOverlayStage(mintingOverlayStages.mintCompleted));
-            const passport = await addAPassport(connectedWallet.walletAddress,score,tx);
+            const img = await getImageLinkFromIPFSLink(ipfsLink);
+            const passport = await addAPassport(connectedWallet.walletAddress, score, tx, img);
             dispatch(setPassport(passport));
         })
         .catch((error) => {
@@ -89,7 +105,7 @@ export const mint = async (dispatch, connectedWallet) => {
  */
 const getTx = async (txHash) => {
     try {
-        const res = await fetch(fcdEndpoint+"tx/"+txHash, {
+        const res = await fetch(fcdEndpoint + "tx/" + txHash, {
             "headers": {
                 "accept": "application/json, text/plain, */*",
                 "accept-language": "fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7",

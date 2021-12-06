@@ -8,7 +8,6 @@ import {useConnectedWallet} from "@terra-money/use-wallet";
 import {Loader} from "../components/Loader";
 import {messages} from "../constants/constants";
 import {Body1, Heading2, Heading3, TextButton2} from "../components/texts";
-import passportImage from "../res/images/passportImage.png";
 import {ScoreCard} from "../components/score/ScoreCard";
 import {PassportInfo} from "../components/score/PassportInfo";
 import {ScoreDetailCard} from "../components/score/ScoreDetailCard";
@@ -23,7 +22,7 @@ const PassportCards = ({passport}) => {
     return (
         <Box display='flex' flexDirection='row' width='100%' justifyContent='space-around'
              style={{marginTop: '50px', height: '211px'}}>
-            <img src={passportImage} alt='passport' style={{
+            <img src={passport.imageLink} alt='passport' style={{
                 height: width, // todo: fix 'px' and be more adaptive?
                 width: height,
                 transform: 'rotate(-90deg) translateY(' + diff / 2 + 'px) translateX(' + diff / 2 + 'px)',
@@ -75,8 +74,6 @@ const ScoreDetail = ({passport}) => {
     let degenScore = 0;
     let cashScore = 0;
     let airdropScore = 0;
-
-    console.log(passport);
 
     detail.activity.forEach((i) => activityScore += passport.scoreDetail[i]);
     detail.governance.forEach((i) => govScore += passport.scoreDetail[i]);
