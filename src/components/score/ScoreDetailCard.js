@@ -140,7 +140,7 @@ export const ScoreDetailCard = ({title, score, evolution, average, criterias}) =
                         {components}
                     </Box>)}
                 <img src={open ? up_arrow : down_arrow} width='11px' alt='down arrow'
-                     style={{marginTop: '16px', marginBottom: '16px'}} onClick={() => {
+                     style={{marginTop: '16px', marginBottom: '16px', cursor: 'pointer'}} onClick={() => {
                     if (criterias.length > 0)
                         setOpen(!open)
                 }}/>
