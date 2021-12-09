@@ -13,6 +13,29 @@ import {PassportInfo} from "../components/score/PassportInfo";
 import {ScoreDetailCard} from "../components/score/ScoreDetailCard";
 import {cheokee, grey5} from "../constants/colors";
 
+/**
+ * Filter the score detail to return only the score present in criteria to keep
+ * @param {{}} scoreDetail - the detail of the score
+ * @param {[]} criteriaToKeep - the list of criteria to keep
+ */
+const getScoreForCriteria = (criteriaToKeep, scoreDetail) => {
+
+    const criteria = [];
+
+    Object.keys(scoreDetail).forEach((key) => {
+
+        const obj = {};
+        obj[key] = scoreDetail[key]
+
+        if (criteriaToKeep.includes(key)) {
+            criteria.push(obj);
+        }
+    });
+
+    console.log(criteria);
+    return criteria;
+};
+
 const PassportCards = ({passport}) => {
     const width = '316px';
     const height = '211px';
@@ -66,7 +89,6 @@ const ScoreDetail = ({passport}) => {
             'airdropAddict',
             'repeatCustomer'
         ],
-
     };
 
     let activityScore = 0;
@@ -82,13 +104,18 @@ const ScoreDetail = ({passport}) => {
     detail.airdrops.forEach((i) => airdropScore += passport.scoreDetail[i]);
 
     return (
-        <Box display='flex' flexDirection='row' justifyContent='space-around'
+        <Box display='inline-flex' flexDirection='row' justifyContent='space-around'
              style={{marginTop: '50px', marginLeft: '20px', marginRight: '20px', width: '80%'}}>
-            <ScoreDetailCard score={activityScore} title="ACTIVITY" average={3.1} evolution={2.4}/>
-            <ScoreDetailCard score={govScore} title="GOVERNANCE" average={0.9} evolution={-1.3}/>
-            <ScoreDetailCard score={degenScore} title="DEGENERACY" average={3.1} evolution={1}/>
-            <ScoreDetailCard score={cashScore} title="CASH OUT / HODL" average={2.3} evolution={2}/>
-            <ScoreDetailCard score={airdropScore} title="AIRDROPS" average={2} evolution={-0.5}/>
+            <ScoreDetailCard score={activityScore} title="ACTIVITY" average={3.1} evolution={2.4}
+                             criterias={getScoreForCriteria(detail.activity, passport.scoreDetail)}/>
+            <ScoreDetailCard score={govScore} title="GOVERNANCE" average={0.9} evolution={-1.3}
+                             criterias={getScoreForCriteria(detail.governance, passport.scoreDetail)}/>
+            <ScoreDetailCard score={degenScore} title="DEGENERACY" average={3.1} evolution={1}
+                             criterias={getScoreForCriteria(detail.degeneracy, passport.scoreDetail)}/>
+            <ScoreDetailCard score={cashScore} title="CASH OUT / HODL" average={2.3} evolution={2}
+                             criterias={getScoreForCriteria(detail.cash_out_hodl, passport.scoreDetail)}/>
+            <ScoreDetailCard score={airdropScore} title="AIRDROPS" average={2} evolution={-0.5}
+                             criterias={getScoreForCriteria(detail.airdrops, passport.scoreDetail)}/>
         </Box>
     );
 }
@@ -154,8 +181,15 @@ export const PassportPage = () => {
         );
     };
 
+    const style = {};
+
+    if (waitingForConnection || loading)
+        style.height = '100vh';
+
     return (
-        <Box display='flex' flexDirection='column' justifyContent='space-between' className='biggerBackground'>
+        <Box display='flex' flexDirection='column' justifyContent='space-between' className='biggerBackground' style={{
+            ...style
+        }}>
             <Header/>
             <MainComponent/>
             <Footer/>
