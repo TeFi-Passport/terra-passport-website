@@ -47,6 +47,11 @@ body {
   background-size: cover;
 }
 
+.biggerBackground {
+  background-image: url("./res/images/expandedBackground.png");
+  background-size: cover;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

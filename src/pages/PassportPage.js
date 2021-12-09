@@ -155,7 +155,7 @@ export const PassportPage = () => {
     };
 
     return (
-        <Box display='flex' flexDirection='column' justifyContent='space-between' height='100vh'>
+        <Box display='flex' flexDirection='column' justifyContent='space-between' className='biggerBackground'>
             <Header/>
             <MainComponent/>
             <Footer/>
