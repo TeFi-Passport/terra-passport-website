@@ -29,11 +29,11 @@ export const PassportInfo = ({height, address, chainId, block, style}) => {
         <Card style={{height: height, ...style}}>
             <Box display='flex' flexDirection='column' justifyContent='center' height={height}>
                 <Box display='flex' flexDirection='column'>
-                    <Heading3Bigger style={{color: grey5}}>WALLET ADDRESS</Heading3Bigger>
+                    <Heading3Bigger style={{color: grey5, marginBottom: '9px'}}>WALLET ADDRESS</Heading3Bigger>
                     <SubTitle style={{color: grey}}>{address}</SubTitle>
                 </Box>
-                <Box display='flex' flexDirection='column'>
-                    <Heading3 style={{color: grey5}}>CHAINID AND BLOCK HEIGHT</Heading3>
+                <Box display='flex' flexDirection='column' style={{marginTop: '14px'}}>
+                    <Heading3 style={{color: grey5, marginBottom: '9px'}}>CHAINID AND BLOCK HEIGHT</Heading3>
                     <SubTitle style={{color: grey}}>{`${chainId} / ${block}`}</SubTitle>
                 </Box>
             </Box>

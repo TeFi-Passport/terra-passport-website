@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import {Footer} from "../components/Footer";
 import passportImage from "../res/images/passportImage.png";
 import {Heading1, Heading2, TextButton1} from "../components/texts";
-import {orange1} from "../constants/colors";
+import {tequila} from "../constants/colors";
 import {GhostLargeButton} from "../components/buttons/CustomButtons";
 import {useDispatch, useSelector} from "react-redux";
 import {setOverlayStage} from "../store/action";
@@ -53,7 +53,7 @@ export const HomePage = () => {
                         <div style={{marginBottom: '12px'}}>
                             <Heading2>
                                 <span style={{color: 'white'}}>THE FIRST </span>
-                                <span style={{color: orange1}}>NFT PASSPORT BASED ON ON-CHAIN REPUTATION </span>
+                                <span style={{color: tequila}}>NFT PASSPORT BASED ON ON-CHAIN REPUTATION </span>
                                 <span
                                     style={{color: 'white'}}>TO GRANT EXCLUSIVE ACCESS WITHIN TERRA DECENTRALIZED FINANCE</span>
                             </Heading2>
