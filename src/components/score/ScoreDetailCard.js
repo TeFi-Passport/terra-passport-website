@@ -135,11 +135,18 @@ export const ScoreDetailCard = ({title, score, evolution, average, criterias}) =
                 <ScoreText style={{color: tequila, marginTop: '38px', marginBottom: '34px'}}>{score}</ScoreText>
                 <EvolutionText style={{color: evolution < 0 ? red1 : green1}}>{evolution}%</EvolutionText>
                 <AVGText style={{color: grey5, marginTop: '12px', marginBottom: '22px'}}>AVG {average}</AVGText>
+                <Box style={{width: '100%', height: '1px', background: darkBackground}}/>
                 {open && components.length > 0 && (
-                    <Box display='flex' flexDirection='column' style={{padding: '20px 0', width: '100%', background: darkBackground}}>
+                    <Box display='flex' flexDirection='column'
+                         style={{
+                             padding: '20px 0',
+                             width: '100%',
+                             background: darkBackground,
+                             //boxShadow: '0px 4px 4px 0px #FF0000D inset',
+                             boxShadow: '0px 4px 4px 0px #0000001D inset',
+                         }}>
                         {components}
                     </Box>)}
-                <Box style={{width: '100%', height: '1px', background: darkBackground}}/>
                 <img src={open ? up_arrow : down_arrow} width='11px' alt='down arrow'
                      style={{marginTop: '16px', marginBottom: '16px', cursor: 'pointer'}} onClick={() => {
                     if (criterias.length > 0)
