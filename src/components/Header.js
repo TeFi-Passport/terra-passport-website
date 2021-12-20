@@ -10,7 +10,7 @@ export const Header = () => {
     const {status} = useWallet();
 
     return (
-        <Box display='flex' flexDirection='row' justifyContent='space-between' style={{padding: '60px 80px 0px 80px'}}>
+        <Box display='flex' flexDirection='row' justifyContent='space-between' style={{paddingTop: '60px'}}>
             <TefiPassportLogo/>
             {status === "WALLET_CONNECTED" && <AddressInfo/>}
             {status !== "WALLET_CONNECTED" && <ConnectButton/>}

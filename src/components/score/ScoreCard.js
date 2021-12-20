@@ -10,6 +10,7 @@ import React from "react";
 import styled from "styled-components";
 import {green1, grey, grey5, red1, tequila} from "../../constants/colors";
 import {Card} from "./Card";
+import {Container} from "@mui/material";
 
 export const Title = styled.h1`
 font-family: RoadRadio;
@@ -53,21 +54,24 @@ text-align: center;
 
 const EvolutionStat = ({stat}) => {
     return (
-        <EvolutionText style={{color: stat > 0 ? green1 : red1, marginTop: '30px', marginLeft: '10px'}}>{stat}%</EvolutionText>
+        <EvolutionText
+            style={{color: stat > 0 ? green1 : red1, marginTop: '30px', marginLeft: '10px'}}>{stat}%</EvolutionText>
     );
 }
 
 export const ScoreCard = ({score, evolution, meanScore, height, style}) => {
     return (
-        <Card horizontalPadding={'60px'} style={{height: height, ...style}}>
+        <Card style={{height: height, ...style}}>
             <Box display='flex' flexDirection='column' style={{height: height}}
-                 justifyContent='center'>
-                <Title style={{color: grey5}}>SCORE</Title>
-                <Box display='flex' flexDirection='row' alignItems='center'>
-                    <ScoreText style={{color: tequila}}>{score}/30</ScoreText>
-                    <EvolutionStat stat={evolution}/>
-                </Box>
-                <ComparisonText style={{color: grey}}>vs. Mean Score of {meanScore}</ComparisonText>
+                 justifyContent='center' alignItems='center'>
+                <div style={{width: 'max-content'}}>
+                    <Title style={{color: grey5}}>SCORE</Title>
+                    <Box display='flex' flexDirection='row' alignItems='center'>
+                        <ScoreText style={{color: tequila}}>{score}/30</ScoreText>
+                        <EvolutionStat stat={evolution}/>
+                    </Box>
+                    <ComparisonText style={{color: grey}}>vs. Mean Score of {meanScore}</ComparisonText>
+                </div>
             </Box>
         </Card>
     );

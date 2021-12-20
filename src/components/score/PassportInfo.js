@@ -27,15 +27,17 @@ text-align: left;
 export const PassportInfo = ({height, address, chainId, block, style}) => {
     return (
         <Card style={{height: height, ...style}}>
-            <Box display='flex' flexDirection='column' justifyContent='center' height={height}>
-                <Box display='flex' flexDirection='column'>
-                    <Heading3Bigger style={{color: grey5, marginBottom: '9px'}}>WALLET ADDRESS</Heading3Bigger>
-                    <SubTitle style={{color: grey}}>{address}</SubTitle>
-                </Box>
-                <Box display='flex' flexDirection='column' style={{marginTop: '14px'}}>
-                    <Heading3 style={{color: grey5, marginBottom: '9px'}}>CHAINID AND BLOCK HEIGHT</Heading3>
-                    <SubTitle style={{color: grey}}>{`${chainId} / ${block}`}</SubTitle>
-                </Box>
+            <Box display='flex' flexDirection='column' justifyContent='center' height={height} alignItems='center'>
+                <div style={{width: 'max-content'}}>
+                    <Box display='flex' flexDirection='column'>
+                        <Heading3Bigger style={{color: grey5, marginBottom: '9px'}}>WALLET ADDRESS</Heading3Bigger>
+                        <SubTitle style={{color: grey}}>{address}</SubTitle>
+                    </Box>
+                    <Box display='flex' flexDirection='column' style={{marginTop: '14px'}}>
+                        <Heading3 style={{color: grey5, marginBottom: '9px'}}>CHAINID AND BLOCK HEIGHT</Heading3>
+                        <SubTitle style={{color: grey}}>{`${chainId} / ${block}`}</SubTitle>
+                    </Box>
+                </div>
             </Box>
         </Card>
     );

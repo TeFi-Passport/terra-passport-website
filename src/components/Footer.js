@@ -21,7 +21,7 @@ const Icon = ({src, alt, height, style, link}) => {
 export const Footer = () => {
 
     return (
-        <Box display='flex' flexDirection='column' style={{padding: '0px 80px 24px 80px'}}>
+        <Box display='flex' flexDirection='column' style={{paddingBottom: '24px'}}>
             <Box height='1px' width={'100%'} style={{background: lightOrange30, marginBottom: '24px'}}/>
             <Box display='flex' flexDirection='row' justifyContent='space-between' alignItems='center'>
                 <TefiPassportLogo style={{opacity: 0.5}} height='26px'/>

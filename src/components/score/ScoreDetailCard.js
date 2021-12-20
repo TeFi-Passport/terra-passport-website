@@ -125,7 +125,7 @@ export const ScoreDetailCard = ({title, score, evolution, average, criterias}) =
     return (
         <Card
             style={{
-                width: '195px',
+                width: '100%',
                 background: 'transparent'
             }}>
             <Box display='inline-flex' flexDirection='column'
@@ -134,12 +134,12 @@ export const ScoreDetailCard = ({title, score, evolution, average, criterias}) =
                 <Title style={{color: grey5, marginTop: '20px'}}>{title}</Title>
                 <ScoreText style={{color: tequila, marginTop: '38px', marginBottom: '34px'}}>{score}</ScoreText>
                 <EvolutionText style={{color: evolution < 0 ? red1 : green1}}>{evolution}%</EvolutionText>
-                <AVGText style={{color: grey5, marginTop: '12px'}}>AVG {average}</AVGText>
+                <AVGText style={{color: grey5, marginTop: '12px', marginBottom: '22px'}}>AVG {average}</AVGText>
                 {open && components.length > 0 && (
-                    <Box display='flex' flexDirection='column' style={{paddingTop: '20px', width: '100%'}}>
+                    <Box display='flex' flexDirection='column' style={{padding: '20px 0', width: '100%', background: darkBackground}}>
                         {components}
                     </Box>)}
-                <Box style={{width: '100%', height: '1px', background: darkBackground, marginTop: '22px'}}/>
+                <Box style={{width: '100%', height: '1px', background: darkBackground}}/>
                 <img src={open ? up_arrow : down_arrow} width='11px' alt='down arrow'
                      style={{marginTop: '16px', marginBottom: '16px', cursor: 'pointer'}} onClick={() => {
                     if (criterias.length > 0)
