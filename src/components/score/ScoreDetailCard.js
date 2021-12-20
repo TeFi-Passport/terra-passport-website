@@ -142,7 +142,6 @@ export const ScoreDetailCard = ({title, score, evolution, average, criterias}) =
                              padding: '20px 0',
                              width: '100%',
                              background: darkBackground,
-                             //boxShadow: '0px 4px 4px 0px #FF0000D inset',
                              boxShadow: '0px 4px 4px 0px #0000001D inset',
                          }}>
                         {components}

@@ -41,17 +41,16 @@ const getScoreForCriteria = (criteriaToKeep, scoreDetail) => {
 const PassportCards = ({passport}) => {
     const middleContainerRef = useRef(null);
     const [width, setWidth] = useState(0);
-    const [height, setheight] = useState(0);
+    const [height, setHeight] = useState(0);
 
     const imageRatio = 211/316;
 
     const handleResize = () => {
         if(middleContainerRef.current){
 
-            let height = middleContainerRef.current.offsetHeight;
             let width  = middleContainerRef.current.offsetWidth;
 
-            setheight(width*0.9*imageRatio);
+            setHeight(width*0.9*imageRatio);
             setWidth(width*0.9);
         }
     };

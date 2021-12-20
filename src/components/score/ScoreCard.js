@@ -10,7 +10,6 @@ import React from "react";
 import styled from "styled-components";
 import {green1, grey, grey5, red1, tequila} from "../../constants/colors";
 import {Card} from "./Card";
-import {Container} from "@mui/material";
 
 export const Title = styled.h1`
 font-family: RoadRadio;
