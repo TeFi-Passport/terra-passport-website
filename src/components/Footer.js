@@ -1,12 +1,15 @@
 import React from "react";
 import Box from "@mui/material/Box";
-import {TefiPassportLogo} from "./TefiPassportLogo";
+import {TefiPassportLogo, TefiPassportSimpleLogo} from "./TefiPassportLogo";
 import gitBookLogo from "../res/images/GitBook.svg";
 import githubLogo from "../res/images/GitHub.svg";
 import mediumLogo from "../res/images/Medium.svg";
 import telegramLogo from "../res/images/Telegram.svg";
 import twitterLogo from "../res/images/Twitter.svg";
 import {lightOrange30} from "../constants/colors";
+import useWindowSize from "../hooks/useWindowSize";
+import {isMobile} from "../utils/mobileUtils";
+import Row from "./Layout/Row";
 
 const Icon = ({src, alt, height, style, link}) => {
     return (
@@ -19,6 +22,16 @@ const Icon = ({src, alt, height, style, link}) => {
 }
 
 export const Footer = () => {
+
+    const size = useWindowSize();
+    const _isMobile = isMobile(size.width);
+
+    if (_isMobile)
+        return (
+            <Row justifyContent='space-between'>
+                <TefiPassportSimpleLogo height='25px'/>
+            </Row>
+        );
 
     return (
         <Box display='flex' flexDirection='column' style={{paddingBottom: '24px'}}>
