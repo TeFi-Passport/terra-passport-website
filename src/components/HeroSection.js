@@ -41,7 +41,8 @@ const HeroSection = ({showConfirmMintOverlay}) => {
                 </Grid>
                 <Grid item display='flex' flexDirection='column' xs={4} alignItems='flex-end' justifyContent='center'>
                     <img src={passportImage} alt='passport' style={{
-                        maxHeight: '50vh',
+                        minHeight: '15vw',
+                        maxHeight: 'max(50vh, 10vw)',
                         maxWidth: '35vw'
                     }}/>
                 </Grid>
