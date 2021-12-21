@@ -1,31 +1,31 @@
 @font-face {
   font-family: "RoadRadio";
   src: local("RoadRadio"),
-  url("./res/fonts/RoadRadio.ttf") format("truetype");
+  url("./res/fonts/RoadRadio.ttf");
   font-weight: normal;
 }
 @font-face {
   font-family: "RoadRadio";
   src: local("RoadRadio"),
-  url("./res/fonts/RoadRadio-Black.ttf") format("truetype");
+  url("./res/fonts/RoadRadio-Black.ttf");
   font-weight: 900;
 }
 @font-face {
   font-family: "RoadRadio";
   src: local("RoadRadio"),
-  url("./res/fonts/RoadRadio-Bold.ttf") format("truetype");
+  url("./res/fonts/RoadRadio-Bold.ttf");
   font-weight: bold;
 }
 @font-face {
   font-family: "RoadRadio";
   src: local("RoadRadio"),
-  url("./res/fonts/RoadRadio-Light.ttf") format("truetype");
+  url("./res/fonts/RoadRadio-Light.ttf");
   font-weight: 300;
 }
 @font-face {
   font-family: "RoadRadio";
   src: local("RoadRadio"),
-  url("./res/fonts/RoadRadio-Thin.ttf") format("truetype");
+  url("./res/fonts/RoadRadio-Thin.ttf");
   font-weight: 100;
 }
 
