@@ -5,7 +5,7 @@ font-family: RoadRadio;
 font-size: 62px;
 font-style: normal;
 font-weight: 900;
-line-height: 18px;
+line-height: 62px;
 letter-spacing: 0px;
 text-align: left;
 `;
