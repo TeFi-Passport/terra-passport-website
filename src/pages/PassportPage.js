@@ -14,6 +14,8 @@ import {ScoreDetailCard} from "../components/score/ScoreDetailCard";
 import {cheokee, grey5} from "../constants/colors";
 import Grid from "@mui/material/Grid";
 import {gridSpacing} from "../constants/dimensions";
+import RotatedPassport, {passportImageRatio} from "../components/RotatedPassport";
+import {useRefSize} from "../hooks/useRefSize";
 
 /**
  * Filter the score detail to return only the score present in criteria to keep
@@ -34,46 +36,20 @@ const getScoreForCriteria = (criteriaToKeep, scoreDetail) => {
         }
     });
 
-    console.log(criteria);
     return criteria;
 };
 
 const PassportCards = ({passport}) => {
+
     const middleContainerRef = useRef(null);
-    const [width, setWidth] = useState(0);
-    const [height, setHeight] = useState(0);
-
-    const imageRatio = 211/316;
-
-    const handleResize = () => {
-        if(middleContainerRef.current){
-
-            let width  = middleContainerRef.current.offsetWidth;
-
-            setHeight(width*0.9*imageRatio);
-            setWidth(width*0.9);
-        }
-    };
-
-    useEffect(() => {
-        window.addEventListener("resize", handleResize, false);
-    }, []);
-
-    useEffect( () => {
-        handleResize();
-    }, [middleContainerRef]);
-
-    const diff = width - height;
+    const refSize = useRefSize(middleContainerRef);
+    const height = refSize.width*0.9*passportImageRatio;
 
     return (
         <Grid container columnSpacing={gridSpacing} style={{marginTop: '50px', height: height}}>
             <Grid item xs={1}/>
             <Grid item xs={3} ref={middleContainerRef}>
-                <img src={passport.imageLink} alt='passport' style={{
-                    width: height,
-                    imageRatio: 1,
-                    transform: 'rotate(-90deg) translateY(' + (diff / 1.8) + 'px) translateX(' + (diff / 1.8) + 'px)',
-                }}/>
+                <RotatedPassport width={refSize.width*0.9} img={passport.imageLink}/>
             </Grid>
             <Grid item xs={3}>
                 <ScoreCard score={passport.score} meanScore={10} evolution={-2.4} height={height}/>

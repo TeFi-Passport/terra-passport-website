@@ -9,6 +9,14 @@ import {GhostLargeButton} from "./buttons/CustomButtons";
 import passportImage from "../res/images/passportImage.png";
 import Grid from "@mui/material/Grid";
 import Column from "./Layout/Column";
+import RotatedPassport, {passportImageRatio} from "./RotatedPassport";
+
+const content = {
+    title: "TEFI PASSPORT",
+    subtitlePart1: "THE FIRST ",
+    subtitlePart2: "NFT PASSPORT BASED ON ON-CHAIN REPUTATION ",
+    subtitlePart3: "TO GRANT EXCLUSIVE ACCESS WITHIN TERRA DECENTRALIZED FINANCE",
+}
 
 const HeroSection = ({showConfirmMintOverlay}) => {
 
@@ -16,7 +24,27 @@ const HeroSection = ({showConfirmMintOverlay}) => {
     const _isMobile = isMobile(size.width);
 
     if (_isMobile) {
-        return <div/>;
+
+        const vwToPx = (document.documentElement.clientWidth / 100);
+        const imageWidth = 70 * vwToPx;
+
+        return <Column>
+            <Heading1 style={{color: 'white', marginTop: '-30px'}}>{content.title}</Heading1>
+            <div style={{marginBottom: '12px', marginTop: '-1.4rem'}}>
+                <Heading2>
+                    <span style={{color: 'white'}}>{content.subtitlePart1}</span>
+                    <span style={{color: tequila}}>{content.subtitlePart2}</span>
+                    <span
+                        style={{color: 'white'}}>{content.subtitlePart3}</span>
+                </Heading2>
+            </div>
+            <RotatedPassport width={imageWidth} img={passportImage} style={{marginBottom: -(imageWidth/passportImageRatio - imageWidth)/2.4, marginLeft: '-3vw'}}/>
+            <GhostLargeButton onClick={showConfirmMintOverlay}>
+                <TextButton1 style={{padding: '10px 15px'}}>
+                    MINT YOUR PASSPORT
+                </TextButton1>
+            </GhostLargeButton>
+        </Column>;
     }
 
     return (
@@ -26,13 +54,13 @@ const HeroSection = ({showConfirmMintOverlay}) => {
             }}>
                 <Grid item xs={8}>
                     <Column justifyContent='center' height='100%'>
-                        <Heading1 style={{color: 'white', marginTop: '-30px'}}>TEFI PASSPORT</Heading1>
+                        <Heading1 style={{color: 'white', marginTop: '-30px'}}>{content.title}</Heading1>
                         <div style={{marginBottom: '12px', marginTop: '-1.4rem'}}>
                             <Heading2>
-                                <span style={{color: 'white'}}>THE FIRST </span>
-                                <span style={{color: tequila}}>NFT PASSPORT BASED ON ON-CHAIN REPUTATION </span>
+                                <span style={{color: 'white'}}>{content.subtitlePart1}</span>
+                                <span style={{color: tequila}}>{content.subtitlePart2}</span>
                                 <span
-                                    style={{color: 'white'}}>TO GRANT EXCLUSIVE ACCESS WITHIN TERRA DECENTRALIZED FINANCE</span>
+                                    style={{color: 'white'}}>{content.subtitlePart3}</span>
                             </Heading2>
                         </div>
                         <GhostLargeButton onClick={showConfirmMintOverlay}><TextButton1>MINT YOUR

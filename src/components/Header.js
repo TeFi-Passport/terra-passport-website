@@ -16,7 +16,7 @@ export const Header = () => {
 
     if (_isMobile)
         return (
-            <Row justifyContent='space-between' alignItems='center' height='100px'>
+            <Row justifyContent='space-between' alignItems='center' height='100px' style={{marginBottom: '50px'}}>
                 <TefiPassportSimpleLogo height='25px'/>
                 {status === "WALLET_CONNECTED" && <AddressInfo/>}
                 {status !== "WALLET_CONNECTED" && <ConnectButton/>}

@@ -9,6 +9,7 @@ import twitterLogo from "../res/images/Twitter.svg";
 import {lightOrange30} from "../constants/colors";
 import useWindowSize from "../hooks/useWindowSize";
 import {isMobile} from "../utils/mobileUtils";
+import Column from "./Layout/Column";
 import Row from "./Layout/Row";
 
 const Icon = ({src, alt, height, style, link}) => {
@@ -21,6 +22,23 @@ const Icon = ({src, alt, height, style, link}) => {
     );
 }
 
+const IconRow = ({marginBetweenItems}) => {
+    return (
+        <Row justifyContent='center' alignItems='center'>
+            <Icon src={telegramLogo} alt='telegram' height='19px'
+                  style={{marginRight: marginBetweenItems, cursor: 'pointer'}} link={'https://t.me/tefipassport'}/>
+            <Icon src={twitterLogo} alt='twitter' height='19px'
+                  style={{marginRight: marginBetweenItems, cursor: 'pointer'}} link={'https://twitter.com/Tefi_Passport'}/>
+            <Icon src={mediumLogo} alt='medium' height='14px' style={{marginRight: marginBetweenItems, cursor: 'pointer'}}
+                  link={'https://medium.com/@TeFiPassport'}/>
+            <Icon src={githubLogo} alt='github' height='20px' style={{marginRight: marginBetweenItems, cursor: 'pointer'}}
+                  link={'https://github.com/TeFi-Passport'}/>
+            <Icon src={gitBookLogo} alt='gitbook' height='21px' style={{cursor: 'pointer'}}
+                  link={'https://tefipassport.gitbook.io/wiki/'}/>
+        </Row>
+    );
+}
+
 export const Footer = () => {
 
     const size = useWindowSize();
@@ -28,9 +46,11 @@ export const Footer = () => {
 
     if (_isMobile)
         return (
-            <Row justifyContent='space-between'>
-                <TefiPassportSimpleLogo height='25px'/>
-            </Row>
+            <Column width='100%' alignItems='center' style={{marginTop: '65px', marginBottom: '35px'}}>
+                <Box height='1px' width={'100%'} style={{background: lightOrange30, marginBottom: '28px'}}/>
+                <TefiPassportLogo style={{opacity: 0.5, width: '100%', justifyContent: 'center', marginBottom: '30px'}}/>
+                <IconRow marginBetweenItems='10vw'/>
+            </Column>
         );
 
     return (
@@ -38,18 +58,7 @@ export const Footer = () => {
             <Box height='1px' width={'100%'} style={{background: lightOrange30, marginBottom: '24px'}}/>
             <Box display='flex' flexDirection='row' justifyContent='space-between' alignItems='center'>
                 <TefiPassportLogo style={{opacity: 0.5}} height='26px'/>
-                <Box display='flex' flexDirection='row' justifyContent='center' alignItems='center'>
-                    <Icon src={telegramLogo} alt='telegram' height='19px'
-                          style={{marginRight: '44px', cursor: 'pointer'}} link={'https://t.me/tefipassport'}/>
-                    <Icon src={twitterLogo} alt='twitter' height='19px'
-                          style={{marginRight: '44px', cursor: 'pointer'}} link={'https://twitter.com/Tefi_Passport'}/>
-                    <Icon src={mediumLogo} alt='medium' height='14px' style={{marginRight: '44px', cursor: 'pointer'}}
-                          link={'https://medium.com/@TeFiPassport'}/>
-                    <Icon src={githubLogo} alt='github' height='20px' style={{marginRight: '44px', cursor: 'pointer'}}
-                          link={'https://github.com/TeFi-Passport'}/>
-                    <Icon src={gitBookLogo} alt='gitbook' height='21px' style={{cursor: 'pointer'}}
-                          link={'https://tefipassport.gitbook.io/wiki/'}/>
-                </Box>
+                <IconRow marginBetweenItems='44px'/>
             </Box>
         </Box>
     );

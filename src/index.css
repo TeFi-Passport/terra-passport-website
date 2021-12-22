@@ -31,6 +31,13 @@
 
 html{
   background-color: #000;
+  font-size: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  html{
+    font-size: 60%;
+  }
 }
 
 body {
@@ -49,6 +56,11 @@ body {
 
 .biggerBackground {
   background-image: url("./res/images/expandedBackground.png");
+  background-size: cover;
+}
+
+.mobileBackground {
+  background-image: url("./res/images/mobile_bg.png");
   background-size: cover;
 }
 

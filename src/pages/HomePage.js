@@ -9,6 +9,9 @@ import {useConnectedWallet} from "@terra-money/use-wallet";
 import {retrievePassport} from "../services/terraPassportAPI";
 import {useNavigate} from "react-router-dom";
 import HeroSection from "../components/HeroSection";
+import Div100vh from 'react-div-100vh'
+import useWindowSize from "../hooks/useWindowSize";
+import {isMobile} from "../utils/mobileUtils";
 
 export const HomePage = () => {
 
@@ -17,6 +20,8 @@ export const HomePage = () => {
     const dispatch = useDispatch();
     const connectedWallet = useConnectedWallet();
     const navigate = useNavigate();
+    const size = useWindowSize();
+    const _isMobile = isMobile(size.width);
 
     useEffect(() => {
         if (passport && overlayStage.name !== 'mintCompleted') {
@@ -26,7 +31,8 @@ export const HomePage = () => {
                 if (connectedWallet.walletAddress) {
                     retrievePassport(dispatch, connectedWallet.walletAddress);
                 }
-            } catch (e) {}
+            } catch (e) {
+            }
         }
     }, [connectedWallet, passport]);
 
@@ -37,16 +43,19 @@ export const HomePage = () => {
     }
 
     return (
-        <Box display='flex' flexDirection='column' className='background' style={{
+        <div className={_isMobile? 'mobileBackground' : 'background'} style={{
             padding: '0px 5vw',
+            minHeight: document.getElementsByClassName('home_page_container')[0]? document.getElementsByClassName('home_page_container')[0].clientHeight : '100%',
         }}>
             {overlayStage.name !== mintingOverlayStages.hidden.name && (<Overlay/>)}
-            <Box display='flex' flexDirection='column' justifyContent='space-between' height='100vh'>
-                <Header/>
-                <HeroSection showConfirmMintOverlay={showConfirmMintOverlay}/>
-                <Footer/>
-            </Box>
-        </Box>
+            <Div100vh>
+                <Box display='flex' flexDirection='column' justifyContent='space-between' minHeight='100%' className='home_page_container'>
+                    <Header/>
+                    <HeroSection showConfirmMintOverlay={showConfirmMintOverlay}/>
+                    <Footer/>
+                </Box>
+            </Div100vh>
+        </div>
     );
 
 }

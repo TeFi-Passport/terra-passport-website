@@ -2,19 +2,19 @@ import styled from "styled-components";
 
 export const Heading1 = styled.h1`
 font-family: RoadRadio;
-font-size: 62px;
+font-size: 3.9rem;
 font-style: normal;
 font-weight: 900;
-line-height: 62px;
+line-height: 3.9rem;
 letter-spacing: 0px;
 text-align: left;
 `;
 export const Heading2 = styled.h2`
 font-family: RoadRadio;
-font-size: 26px;
+font-size: 1.7rem;
 font-style: normal;
 font-weight: 400;
-line-height: 36px;
+line-height: 1.9rem;
 letter-spacing: 0px;
 text-align: left;
 `;

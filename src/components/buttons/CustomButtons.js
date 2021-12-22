@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import {tequila} from "../../constants/colors";
 import React from "react";
+import useWindowSize from "../../hooks/useWindowSize";
+import {isMobile} from "../../utils/mobileUtils";
 
 const CustomButton = styled.div`
   border-radius: 6px;
@@ -12,16 +14,28 @@ const CustomButton = styled.div`
   text-align: center;
 `;
 
-// todo: update px to more adaptive size
 const largeWidth = '343px';
 const largeHeight = '48px';
 
 const LargeButton = ({onClick, style, children, className}) => {
-    return <CustomButton onClick={onClick} style={{
-        width: largeWidth,
-        height: largeHeight,
-        ...style
-    }} className={className}>
+
+    const size = useWindowSize();
+    const _isMobile = isMobile(size.width);
+
+    if (_isMobile) {
+        style = {
+            ...style,
+            width: 'max-content'
+        }
+    } else {
+        style = {
+            ...style,
+            width : largeWidth,
+            height: largeHeight,
+        }
+    }
+
+    return <CustomButton onClick={onClick} style={style} className={className}>
         {children}
     </CustomButton>;
 }

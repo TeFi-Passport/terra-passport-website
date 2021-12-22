@@ -11,8 +11,6 @@ export const ConnectButton = () => {
     const {connect, availableConnections} = useWallet();
     const { enqueueSnackbar } = useSnackbar();
 
-    console.log(availableConnections);
-
     return (
         <GhostSmallButton
             onClick={() => {
