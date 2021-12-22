@@ -10,8 +10,6 @@ import {retrievePassport} from "../services/terraPassportAPI";
 import {useNavigate} from "react-router-dom";
 import HeroSection from "../components/HeroSection";
 import Div100vh from 'react-div-100vh'
-import useWindowSize from "../hooks/useWindowSize";
-import {isMobile} from "../utils/mobileUtils";
 
 export const HomePage = () => {
 
@@ -20,8 +18,7 @@ export const HomePage = () => {
     const dispatch = useDispatch();
     const connectedWallet = useConnectedWallet();
     const navigate = useNavigate();
-    const size = useWindowSize();
-    const _isMobile = isMobile(size.width);
+    const isMobile = useSelector(state => state.isMobile);
 
     useEffect(() => {
         if (passport && overlayStage.name !== 'mintCompleted') {
@@ -43,7 +40,7 @@ export const HomePage = () => {
     }
 
     return (
-        <div className={_isMobile? 'mobileBackground' : 'background'} style={{
+        <div className={isMobile? 'mobileBackground' : 'background'} style={{
             padding: '0px 5vw',
             minHeight: document.getElementsByClassName('home_page_container')[0]? document.getElementsByClassName('home_page_container')[0].clientHeight : '100%',
         }}>

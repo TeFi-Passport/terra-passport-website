@@ -4,17 +4,15 @@ import Box from "@mui/material/Box";
 import {useWallet} from "@terra-money/use-wallet";
 import {AddressInfo} from "./buttons/AddressInfo";
 import {TefiPassportLogo, TefiPassportSimpleLogo} from "./TefiPassportLogo";
-import useWindowSize from "../hooks/useWindowSize";
-import {isMobile} from "../utils/mobileUtils";
 import Row from "./Layout/Row";
+import {useSelector} from "react-redux";
 
 export const Header = () => {
 
     const {status} = useWallet();
-    const size = useWindowSize();
-    const _isMobile = isMobile(size.width);
+    const isMobile = useSelector(state => state.isMobile);
 
-    if (_isMobile)
+    if (isMobile)
         return (
             <Row justifyContent='space-between' alignItems='center' height='100px' style={{marginBottom: '50px'}}>
                 <TefiPassportSimpleLogo height='25px'/>

@@ -1,7 +1,5 @@
 import React from "react";
 import {withTheme} from "@emotion/react";
-import useWindowSize from "../hooks/useWindowSize";
-import {isMobile} from "../utils/mobileUtils";
 import Box from "@mui/material/Box";
 import {Heading1, Heading2, TextButton1} from "./texts";
 import {tequila} from "../constants/colors";
@@ -10,6 +8,7 @@ import passportImage from "../res/images/passportImage.png";
 import Grid from "@mui/material/Grid";
 import Column from "./Layout/Column";
 import RotatedPassport, {passportImageRatio} from "./RotatedPassport";
+import {useSelector} from "react-redux";
 
 const content = {
     title: "TEFI PASSPORT",
@@ -20,31 +19,35 @@ const content = {
 
 const HeroSection = ({showConfirmMintOverlay}) => {
 
-    const size = useWindowSize();
-    const _isMobile = isMobile(size.width);
+    const size = useSelector(state => state.screenSize);
+    const isMobile = useSelector(state => state.isMobile);
 
-    if (_isMobile) {
+    if (isMobile) {
 
-        const vwToPx = (document.documentElement.clientWidth / 100);
-        const imageWidth = 70 * vwToPx;
+        const imageWidth = 0.7 * size.width;
 
-        return <Column>
-            <Heading1 style={{color: 'white', marginTop: '-30px'}}>{content.title}</Heading1>
-            <div style={{marginBottom: '12px', marginTop: '-1.4rem'}}>
-                <Heading2>
-                    <span style={{color: 'white'}}>{content.subtitlePart1}</span>
-                    <span style={{color: tequila}}>{content.subtitlePart2}</span>
-                    <span
-                        style={{color: 'white'}}>{content.subtitlePart3}</span>
-                </Heading2>
-            </div>
-            <RotatedPassport width={imageWidth} img={passportImage} style={{marginBottom: -(imageWidth/passportImageRatio - imageWidth)/2.4, marginLeft: '-3vw'}}/>
-            <GhostLargeButton onClick={showConfirmMintOverlay}>
-                <TextButton1 style={{padding: '10px 15px'}}>
-                    MINT YOUR PASSPORT
-                </TextButton1>
-            </GhostLargeButton>
-        </Column>;
+        return (
+            <Column>
+                <Heading1 style={{color: 'white', marginTop: '-30px'}}>{content.title}</Heading1>
+                <div style={{marginBottom: '12px', marginTop: '-1.4rem'}}>
+                    <Heading2>
+                        <span style={{color: 'white'}}>{content.subtitlePart1}</span>
+                        <span style={{color: tequila}}>{content.subtitlePart2}</span>
+                        <span
+                            style={{color: 'white'}}>{content.subtitlePart3}</span>
+                    </Heading2>
+                </div>
+                <RotatedPassport width={imageWidth} img={passportImage} style={{
+                    marginBottom: -(imageWidth / passportImageRatio - imageWidth) / 2.4,
+                    marginLeft: '-3vw'
+                }}/>
+                <GhostLargeButton onClick={showConfirmMintOverlay}>
+                    <TextButton1 style={{padding: '10px 15px'}}>
+                        MINT YOUR PASSPORT
+                    </TextButton1>
+                </GhostLargeButton>
+            </Column>
+        );
     }
 
     return (

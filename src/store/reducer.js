@@ -36,4 +36,12 @@ export default combineReducers({
     passport: createReducer(null, {
         SET_PASSPORT: (state, {value}) => value,
     }),
+    // the screen of the size
+    screenSize: createReducer({width: undefined, height: undefined}, {
+        SET_SCREEN_SIZE: (state, {value}) => value,
+    }),
+    // useful to know if it is a mobile screen or not
+    isMobile: createReducer(null, {
+        SET_IS_MOBILE: (state, {value}) => value,
+    }),
 });

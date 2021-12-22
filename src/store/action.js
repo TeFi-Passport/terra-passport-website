@@ -52,3 +52,13 @@ export const setPassport = value => ({
     type: 'SET_PASSPORT',
     value,
 });
+
+export const setScreenSize = value => ({
+    type: 'SET_SCREEN_SIZE',
+    value,
+});
+
+export const setIsMobile = value => ({
+    type: 'SET_IS_MOBILE',
+    value,
+});

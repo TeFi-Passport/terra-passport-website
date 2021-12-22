@@ -8,25 +8,28 @@ import store from "./store/store";
 import {BrowserRouter} from 'react-router-dom';
 import Slide from "@mui/material/Slide";
 import {SnackbarProvider} from "notistack";
+import ScreenSizeProvider from "./services/ScreenSizeProvider";
 
 getChainOptions().then((chainOptions) => {
     ReactDOM.render(
         <WalletProvider {...chainOptions}>
             <Provider store={store}>
                 <BrowserRouter>
-                    <SnackbarProvider
-                        maxSnack={3}
-                        anchorOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                        }}
-                        autoHideDuration={3000}
-                        TransitionComponent={Slide}
-                    >
-                        <React.StrictMode>
-                            <App/>
-                        </React.StrictMode>
-                    </SnackbarProvider>
+                    <ScreenSizeProvider>
+                        <SnackbarProvider
+                            maxSnack={3}
+                            anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            autoHideDuration={3000}
+                            TransitionComponent={Slide}
+                        >
+                            <React.StrictMode>
+                                <App/>
+                            </React.StrictMode>
+                        </SnackbarProvider>
+                    </ScreenSizeProvider>
                 </BrowserRouter>
             </Provider>
         </WalletProvider>,

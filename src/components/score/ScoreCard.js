@@ -10,6 +10,14 @@ import React from "react";
 import styled from "styled-components";
 import {green1, grey, grey5, red1, tequila} from "../../constants/colors";
 import {Card} from "./Card";
+import Column from "../Layout/Column";
+import Row from "../Layout/Row";
+
+const content = {
+    title: 'SCORE',
+    maxScore: 30,
+    vsMeanScore: 'vs. Mean Score of',
+}
 
 export const Title = styled.h1`
 font-family: RoadRadio;
@@ -51,10 +59,37 @@ letter-spacing: 0px;
 text-align: center;
 `;
 
-const EvolutionStat = ({stat}) => {
+const EvolutionStat = ({stat, marginTop = '30px', marginLeft = '10px', style}) => {
     return (
         <EvolutionText
-            style={{color: stat > 0 ? green1 : red1, marginTop: '30px', marginLeft: '10px'}}>{stat}%</EvolutionText>
+            style={{
+                color: stat > 0 ? green1 : red1,
+                marginTop: marginTop,
+                marginLeft: marginLeft
+            }}>{stat}%</EvolutionText>
+    );
+}
+
+export const MobileScoreCard = ({score, evolution, meanScore, style}) => {
+    return (
+        <Card style={{width: '85vw', ...style}}>
+            <Row style={{padding: '12px 0 4px 0'}}
+                 justifyContent='center' alignItems='flex-end'>
+                <Column style={{width: 'max-content'}}>
+                    <Title style={{color: grey5, fontSize: '14px'}}>{content.title}</Title>
+                    <ScoreText style={{color: tequila, fontSize: '48px'}}>{score}/{content.maxScore}</ScoreText>
+                </Column>
+                <Row justifyContent='center' alignItems='flex-start'>
+                    <EvolutionStat stat={evolution} marginLeft={0} marginTop={0} style={{marginLeft: '12px'}}/>
+                    <ComparisonText style={{
+                        color: grey,
+                        lineHeight: '9px',
+                        fontSize: '9px',
+                        marginLeft: '12px'
+                    }}>{content.vsMeanScore} {meanScore}</ComparisonText>
+                </Row>
+            </Row>
+        </Card>
     );
 }
 
@@ -64,12 +99,12 @@ export const ScoreCard = ({score, evolution, meanScore, height, style}) => {
             <Box display='flex' flexDirection='column' style={{height: height}}
                  justifyContent='center' alignItems='center'>
                 <div style={{width: 'max-content'}}>
-                    <Title style={{color: grey5}}>SCORE</Title>
+                    <Title style={{color: grey5}}>{content.title}</Title>
                     <Box display='flex' flexDirection='row' alignItems='center'>
-                        <ScoreText style={{color: tequila}}>{score}/30</ScoreText>
+                        <ScoreText style={{color: tequila}}>{score}/{content.maxScore}</ScoreText>
                         <EvolutionStat stat={evolution}/>
                     </Box>
-                    <ComparisonText style={{color: grey}}>vs. Mean Score of {meanScore}</ComparisonText>
+                    <ComparisonText style={{color: grey}}>{content.vsMeanScore} {meanScore}</ComparisonText>
                 </div>
             </Box>
         </Card>

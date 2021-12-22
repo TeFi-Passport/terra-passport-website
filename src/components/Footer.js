@@ -7,10 +7,9 @@ import mediumLogo from "../res/images/Medium.svg";
 import telegramLogo from "../res/images/Telegram.svg";
 import twitterLogo from "../res/images/Twitter.svg";
 import {lightOrange30} from "../constants/colors";
-import useWindowSize from "../hooks/useWindowSize";
-import {isMobile} from "../utils/mobileUtils";
 import Column from "./Layout/Column";
 import Row from "./Layout/Row";
+import {useSelector} from "react-redux";
 
 const Icon = ({src, alt, height, style, link}) => {
     return (
@@ -41,10 +40,9 @@ const IconRow = ({marginBetweenItems}) => {
 
 export const Footer = () => {
 
-    const size = useWindowSize();
-    const _isMobile = isMobile(size.width);
+    const isMobile = useSelector(state => state.isMobile);
 
-    if (_isMobile)
+    if (isMobile)
         return (
             <Column width='100%' alignItems='center' style={{marginTop: '65px', marginBottom: '35px'}}>
                 <Box height='1px' width={'100%'} style={{background: lightOrange30, marginBottom: '28px'}}/>

@@ -1,8 +1,7 @@
 import styled from "styled-components";
 import {tequila} from "../../constants/colors";
 import React from "react";
-import useWindowSize from "../../hooks/useWindowSize";
-import {isMobile} from "../../utils/mobileUtils";
+import {useSelector} from "react-redux";
 
 const CustomButton = styled.div`
   border-radius: 6px;
@@ -19,10 +18,9 @@ const largeHeight = '48px';
 
 const LargeButton = ({onClick, style, children, className}) => {
 
-    const size = useWindowSize();
-    const _isMobile = isMobile(size.width);
+    const isMobile = useSelector(state => state.isMobile);
 
-    if (_isMobile) {
+    if (isMobile) {
         style = {
             ...style,
             width: 'max-content'
