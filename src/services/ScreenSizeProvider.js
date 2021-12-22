@@ -21,7 +21,7 @@ const ScreenSizeProvider = ({children}) => {
             // Set window width/height to state
             onScreenUpdate({
                 width: document.body.clientWidth,
-                height: document.body.clientHeight,
+                height: Math.max(document.body.clientHeight, window.innerHeight),
             });
         }
 
@@ -30,7 +30,9 @@ const ScreenSizeProvider = ({children}) => {
         // Call handler right away so state gets updated with initial window size
         handleResize();
         // Remove event listener on cleanup
-        return () => window.removeEventListener("resize", handleResize);
+        return () => {
+            window.removeEventListener("resize", handleResize)
+        };
     }, []); // Empty array ensures that effect is only run on mount
 
     return (

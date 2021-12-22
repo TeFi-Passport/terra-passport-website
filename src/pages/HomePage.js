@@ -9,7 +9,7 @@ import {useConnectedWallet} from "@terra-money/use-wallet";
 import {retrievePassport} from "../services/terraPassportAPI";
 import {useNavigate} from "react-router-dom";
 import HeroSection from "../components/HeroSection";
-import Div100vh from 'react-div-100vh'
+import {CustomDiv100vh} from "../components/CustomDiv100vh";
 
 export const HomePage = () => {
 
@@ -40,18 +40,19 @@ export const HomePage = () => {
     }
 
     return (
-        <div className={isMobile? 'mobileBackground' : 'background'} style={{
+        <div className={isMobile ? 'mobileBackground' : 'background'} style={{
             padding: '0px 5vw',
-            minHeight: document.getElementsByClassName('home_page_container')[0]? document.getElementsByClassName('home_page_container')[0].clientHeight : '100%',
+            minHeight: document.getElementsByClassName('home_page_container')[0] ? document.getElementsByClassName('home_page_container')[0].clientHeight : '100%',
         }}>
             {overlayStage.name !== mintingOverlayStages.hidden.name && (<Overlay/>)}
-            <Div100vh>
-                <Box display='flex' flexDirection='column' justifyContent='space-between' minHeight='100%' className='home_page_container'>
+            <CustomDiv100vh>
+                <Box display='flex' flexDirection='column' justifyContent='space-between'
+                     minHeight={isMobile ? '100%' : '100vh'} className='home_page_container'>
                     <Header/>
                     <HeroSection showConfirmMintOverlay={showConfirmMintOverlay}/>
                     <Footer/>
                 </Box>
-            </Div100vh>
+            </CustomDiv100vh>
         </div>
     );
 

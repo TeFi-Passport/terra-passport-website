@@ -82,10 +82,10 @@ text-align: center;
  * @param {string} key - unique key
  * @constructor
  */
-const CriteriaDetail = ({score, name, key}) => {
+const CriteriaDetail = ({score, name}) => {
 
     return (
-        <Box display='flex' flexDirection='column' alignItems='center' key={key}
+        <Box display='flex' flexDirection='column' alignItems='center'
              style={{marginTop: '10px'}}>
             <Box display='flex' flexDirection='row'>
                 <img src={star} alt='star'/>
