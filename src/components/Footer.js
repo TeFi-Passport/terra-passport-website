@@ -1,6 +1,6 @@
 import React from "react";
 import Box from "@mui/material/Box";
-import {TefiPassportLogo, TefiPassportSimpleLogo} from "./TefiPassportLogo";
+import {TefiPassportLogo} from "./TefiPassportLogo";
 import gitBookLogo from "../res/images/GitBook.svg";
 import githubLogo from "../res/images/GitHub.svg";
 import mediumLogo from "../res/images/Medium.svg";
